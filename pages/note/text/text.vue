@@ -4,17 +4,22 @@
 			<rich-text>亲爱的小伙伴，非常歉意。该书版权到期，不再提供在线阅读服务。我们会竭尽全力继续与版权方协商，感谢您一直以来的支持。
 			</rich-text>
 		</view>
-		<button @click="gotoEdit()">编辑</button>
+		<!-- <button @click="gotoEdit()">编辑</button> -->
+		<suspend-menu></suspend-menu>
 	</view>
 
 </template>
 
 <script>
+	import suspendMenu from '@/components/suspend-menu/suspend-menu.vue'
 	export default {
 		data() {
 			return {
 				
 			}
+		},
+		components: {
+			suspendMenu
 		},
 		mounted() {
 			uni.setNavigationBarTitle({
