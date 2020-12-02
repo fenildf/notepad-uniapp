@@ -2,22 +2,54 @@
 	<view class="menu-content">
 		<img class="menu icon" @click="this.openFlag = !this.openFlag" :class="{'menuOpen':openFlag}" src="/static/suspend-menu/menu.png"
 		 alt="" srcset="">
-		<img class="bg-menu icon" :class="{'open open1':openFlag}" src="/static/suspend-menu/bg.png" alt="" srcset="">
-		<img class="pic-menu icon" :class="{'open open2':openFlag}" src="/static/suspend-menu/pic.png" alt="" srcset="">
-		<img class="text-menu icon" :class="{'open open3':openFlag}" src="/static/suspend-menu/text.png" alt="" srcset="">
-		<img class="save-menu icon" :class="{'open open4':openFlag}" src="/static/suspend-menu/save.png" alt="" srcset="">
+		<uni-icons :type="micon1.type" v-show="micon1.show" size="35" color="#505050" @click="_micon(0)" class="icon" :class="{'open open1':openFlag}"></uni-icons>
+		<uni-icons :type="micon2.type" v-show="micon2.show" size="35" color="#505050" @click="_micon(1)" class="icon" :class="{'open open2':openFlag}"></uni-icons>
+		<uni-icons :type="micon3.type" v-show="micon3.show" size="35" color="#505050" @click="_micon(2)" class="icon" :class="{'open open3':openFlag}"></uni-icons>
+		<uni-icons :type="micon4.type" v-show="micon4.show" size="35" color="#505050" @click="_micon(3)" class="icon" :class="{'open open4':openFlag}"></uni-icons>
 	</view>
 </template>
 
 <script>
+	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	export default {
+		props: {
+			micon1: {
+				type: Object
+			},
+			micon2: {
+				type: Object
+			},
+			micon3: {
+				type: Object
+			},
+			micon4: {
+				type: Object
+			}
+		},
 		data() {
 			return {
 				openFlag: false, //是否展开菜单
 			}
 		},
+		created() {
+			if (!this.micon1 && !this.micon2 && !this.micon3 && !this.micon4) {
+				this.micon1 = {
+					show: true,
+					type: 'compose'
+				}
+				this.micon2 = {
+					show: true,
+					type: 'checkbox-filled'
+				}
+			}
+		},
+		components: {
+			uniIcons
+		},
 		methods: {
-
+			_micon(index) {
+				this.$emit('click', index)
+			}
 		}
 	}
 </script>
@@ -69,15 +101,13 @@
 		}
 
 		.open3 {
-			right: 230rpx;
-			bottom: 100rpx;
+			right: 200rpx;
+			bottom: 108rpx;
 		}
 
 		.open4 {
 			right: 160rpx;
 			bottom: 20rpx;
 		}
-
-		.bg-menu {}
 	}
 </style>

@@ -1,35 +1,64 @@
 {
 	"pages": [{
+			"path": "pages/note/note",
+			"style": {
+				"navigationBarTitleText": "点滴",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/share/share",
+			"style": {
+				"navigationBarTitleText": "共享组",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/mood/mood",
+			"style": {
+				"navigationBarTitleText": "心情",
+				"enablePullDownRefresh": false
+			}
+
+		},
+
+
+
+		{
 			"path": "pages/home/home",
 			"style": {
 				"navigationBarTitleText": "小世界",
 				"enablePullDownRefresh": false
 			}
-		},{
+		},
+		{
 			"path": "pages/me/me",
 			"style": {
 				"navigationBarTitleText": "我的",
 				"enablePullDownRefresh": false
 			}
-		},{
+		},
+		{
 			"path": "pages/opinion/opinion",
 			"style": {
 				"navigationBarTitleText": "意见反馈",
 				"enablePullDownRefresh": false
 			}
-		},{
+		},
+		{
 			"path": "pages/user_list/user_list",
-			"style": {
-			}
-		},{
+			"style": {}
+		},
+		{
 			"path": "pages/con_list/con_list",
-			"style": {
-			}
-		},{
+			"style": {}
+		},
+		{
 			"path": "pages/my_con_list/my_con_list",
-			"style": {
-			}
-		},{
+			"style": {}
+		}, {
 			//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 			"path": "pages/new/new",
 			"style": {
@@ -99,60 +128,46 @@
 			"style": {}
 		},
 		{
-			"path" : "pages/note/note",
-			"style" :                                                                                    
-			{
-				"navigationBarTitleText": "点滴",
+			"path": "pages/note/catalog/catalog",
+			"style": {
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-			
+
+		},
+		{
+			"path": "pages/note/content/content",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/note/text/text",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/note/edit/edit",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/share/detail/detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
 		}
-        ,{
-            "path" : "pages/note/catalog/catalog",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/note/content/content",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/note/text/text",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/note/edit/edit",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/share/share",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "我的",
@@ -165,20 +180,28 @@
 		"selectedColor": "#8bce8c",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
-		"list": [
-			{
-			    "pagePath" : "pages/note/note",
-				"iconPath": "static/world.png",
-				"selectedIconPath": "static/world1.png",
+		"list": [{
+				"pagePath": "pages/note/note",
+				"iconPath": "static/tabBar/world.png",
+				"selectedIconPath": "static/tabBar/world_selected.png",
 				"text": "点滴"
-			    
+
 			},
 			{
-				"pagePath": "pages/home/home",
-				"iconPath": "static/world.png",
-				"selectedIconPath": "static/world1.png",
-				"text": "小世界"
+				"pagePath": "pages/share/share",
+				"iconPath": "static/tabBar/share.png",
+				"selectedIconPath": "static/tabBar/share_selected.png",
+				"text": "共享组"
 			},
+			{
+				"pagePath": "pages/mood/mood",
+				"iconPath": "static/tabBar/calendar.png",
+				"selectedIconPath": "static/tabBar/calendar_selected.png",
+				"text": "心情"
+			},
+
+
+
 			{
 				"pagePath": "pages/hot/hot",
 				"iconPath": "static/icon_send.png",
@@ -197,12 +220,12 @@
 			// 	"selectedIconPath": "static/hot-1.png",
 			// 	"text": "推荐"
 			// },
-			{
-				"pagePath": "pages/tag/tag",
-				"iconPath": "static/tag-0.png",
-				"selectedIconPath": "static/tag-1.png",
-				"text": "分类"
-			},
+			// {
+			// 	"pagePath": "pages/tag/tag",
+			// 	"iconPath": "static/tag-0.png",
+			// 	"selectedIconPath": "static/tag-1.png",
+			// 	"text": "分类"
+			// },
 			{
 				"pagePath": "pages/me/me",
 				"iconPath": "static/icon_signal.png",

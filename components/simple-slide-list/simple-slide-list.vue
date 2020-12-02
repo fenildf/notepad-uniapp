@@ -23,7 +23,7 @@
 
 <script>
 	export default {
-		name: 'mark-slide-list',
+		name: 'simple-slide-list',
 		props: {
 			list: { //数据list
 				type: Array,
@@ -235,7 +235,7 @@
 						float: right;
 						position: absolute;
 						margin-left: 130rpx;
-						color: #a9a9a9;
+						color: #393939;
 					}
 				}
 
