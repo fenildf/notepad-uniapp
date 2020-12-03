@@ -5,10 +5,33 @@
 	src: url('https://at.alicdn.com/t/font_702773_g9f89om4v3j.ttf') format('truetype');
 }
 
+page {
+	min-height: 100%;
+	background-color: #EFEFEF;
+}
+
+button {
+	width: 750upx;
+	height: 80upx;
+	line-height: 80upx;
+	text-align: center;
+	font-size: 38upx;
+}
+
+
+
+
+
+
+
+
+
+
+
 .index {
 	flex: 1;
-    width: 750upx;
-    /* min-height: 100vh; */
+	width: 750upx;
+	/* min-height: 100vh; */
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -45,14 +68,14 @@
 
 .card-num-view {
 	background-color: #FF80AB;
-    line-height: 1;
-    display: inline-block;
+	line-height: 1;
+	display: inline-block;
 	padding: 3px 6px;
-    color: #FFFFFF;
-    font-size: 12px;
-    text-align: center;
+	color: #FFFFFF;
+	font-size: 12px;
+	text-align: center;
 	justify-content: center;
-    align-items: center;
+	align-items: center;
 	border-radius: 15px;
 	position: absolute;
 	top: 20upx;
@@ -120,7 +143,7 @@
 
 .card-list2-num-view {
 	transform: scale(0.8);
-    transform-origin: right;
+	transform-origin: right;
 }
 
 .card-list2-num {
@@ -156,12 +179,13 @@
 	align-content: flex-start;
 }
 
-view.tag,.tag {
+view.tag,
+.tag {
 	display: block;
 	width: 177.5upx;
 	height: 180upx;
 	padding: 24upx;
-    line-height: 1;
+	line-height: 1;
 	box-sizing: border-box;
 	text-align: center;
 }
@@ -185,7 +209,7 @@ view.tag,.tag {
 
 .center {
 	flex-direction: column;
-    min-height: 100vh;
+	min-height: 100vh;
 }
 
 .logo {
@@ -298,7 +322,7 @@ view.tag,.tag {
 	flex: 1;
 	flex-direction: column;
 	width: 750upx;
-    min-height: 100vh;
+	min-height: 100vh;
 	padding-top: 30upx;
 }
 
@@ -343,13 +367,7 @@ view.tag,.tag {
 	flex-direction: column;
 }
 
-button {
-	width: 710upx;
-	height: 80upx;
-	line-height: 80upx;
-	text-align: center;
-	font-size: 38upx;
-}
+
 
 button.login {
 	background-color: #FF80AB;
@@ -394,15 +412,19 @@ button.register {
 	background: #eee;
 	color: #555;
 }
-.detail-btn-view view text{
+
+.detail-btn-view view text {
 	margin-left: 10upx;
 }
-.detail-btn-view .download:before { 
+
+.detail-btn-view .download:before {
 	content: '\e617';
 }
-.detail-btn-view .collect:before { 
+
+.detail-btn-view .collect:before {
 	content: '\e68d';
 }
+
 .detail-btn-view .setting {
 	flex: 1;
 }

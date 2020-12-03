@@ -23,6 +23,15 @@
 			}
 
 		},
+		{
+			"path": "pages/me/me",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": false
+			}
+		},
+
+
 
 
 
@@ -30,13 +39,6 @@
 			"path": "pages/home/home",
 			"style": {
 				"navigationBarTitleText": "小世界",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/me/me",
-			"style": {
-				"navigationBarTitleText": "我的",
 				"enablePullDownRefresh": false
 			}
 		},
@@ -133,7 +135,6 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-
 		},
 		{
 			"path": "pages/note/content/content",
@@ -141,7 +142,6 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-
 		},
 		{
 			"path": "pages/note/text/text",
@@ -149,7 +149,6 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-
 		},
 		{
 			"path": "pages/note/edit/edit",
@@ -157,7 +156,6 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-
 		},
 		{
 			"path": "pages/share/detail/detail",
@@ -165,9 +163,26 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-
 		}
-	],
+	    ,{
+            "path" : "pages/note/catalog/share-catalog",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/share/detail/setting",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "我的",
@@ -195,19 +210,19 @@
 			},
 			{
 				"pagePath": "pages/mood/mood",
-				"iconPath": "static/tabBar/calendar.png",
-				"selectedIconPath": "static/tabBar/calendar_selected.png",
+				"iconPath": "static/tabBar/mood.png",
+				"selectedIconPath": "static/tabBar/mood_selected.png",
 				"text": "心情"
 			},
 
 
 
-			{
-				"pagePath": "pages/hot/hot",
-				"iconPath": "static/icon_send.png",
-				"selectedIconPath": "static/icon_send1.png",
-				"text": "发现"
-			},
+			// {
+			// 	"pagePath": "pages/hot/hot",
+			// 	"iconPath": "static/icon_send.png",
+			// 	"selectedIconPath": "static/icon_send1.png",
+			// 	"text": "发现"
+			// },
 			// {
 			// 	"pagePath": "pages/new/new",
 			// 	"iconPath": "static/index-0.png",
@@ -228,8 +243,8 @@
 			// },
 			{
 				"pagePath": "pages/me/me",
-				"iconPath": "static/icon_signal.png",
-				"selectedIconPath": "static/icon_signal1.png",
+				"iconPath": "static/tabBar/mine.png",
+				"selectedIconPath": "static/tabBar/mine_selected.png",
 				"text": "我的"
 			}
 		]

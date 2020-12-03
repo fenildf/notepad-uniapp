@@ -8,20 +8,22 @@
 			</view>
 		</view>
 		<view class="detail-content">
-			<simple-slide-list v-show="current == 0" :list="members" :button="buttonList" :border="true" @click="memberClick"
+			<simple-slide-list v-show="current === 0" :list="members" :button="buttonList" :border="true" @click="memberClick"
 			 @change="memberChange"></simple-slide-list>
-			<simple-slide-list v-show="current == 1" :list="catalogs" :button="buttonList" :border="true" @click="catalogClick"
+			<simple-slide-list v-show="current === 1" :list="catalogs" :button="buttonList" :border="true" @click="catalogClick"
 			 @change="catalogChange"></simple-slide-list>
+			 <setting v-show="current === 2"></setting>
 		</view>
 	</view>
 </template>
 
 <script>
 	import simpleSlideList from "@/components/simple-slide-list/simple-slide-list.vue"
+	import setting from "./setting.vue"
 	export default {
-		name: '',
 		components: {
-			simpleSlideList
+			simpleSlideList,
+			setting
 		},
 		data() {
 			return {
@@ -34,7 +36,7 @@
 					name: "设置",
 				}],
 				buttonList: [{
-					title: '删除',
+					title: '移除',
 					background: '#ff3b32'
 				}],
 				members: [{
@@ -55,17 +57,17 @@
 				],
 				catalogs: [{
 						id: 1,
-						image: '../../static/share/daily.png',
+						image: '../../static/share/wdzl.png',
 						name: '的撒个娇汇顶科技'
 					},
 					{
 						id: 2,
-						image: '../../static/share/daily.png',
+						image: '../../static/share/wdzl.png',
 						name: '家是件好事'
 					},
 					{
 						id: 3,
-						image: '../../static/share/daily.png',
+						image: '../../static/share/wdzl.png',
 						name: '啊大大搭都是非常'
 					}
 				],
@@ -115,6 +117,7 @@
 		background-color: #aedcae;
 		position: fixed;
 		z-index: 1;
+		text-align: center;
 	}
 
 	#detail .detail_head_row {

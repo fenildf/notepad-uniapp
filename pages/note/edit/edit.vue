@@ -1,5 +1,9 @@
 <template>
 	<view class="container">
+		<view>
+			<view class="title">笔记名称：</view>
+			<input class="uni-input" focus placeholder="请输入笔记名称" />
+		</view>
 		<editor id="editor" class="ql-container" :placeholder="placeholder" @ready="onEditorReady"></editor>
 		<suspend-menu :micon1="micon1" :micon2="micon2" :micon3="micon3" @click="iconClick"></suspend-menu>
 	</view>
@@ -46,14 +50,24 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 	.container {
 		padding: 10px;
+
+		.uni-input {
+			margin-top: 10rpx;
+			margin-bottom: 30rpx;
+			font-size: 32rpx;
+		}
 	}
 
 	#editor {
 		width: 700upx;
-		height: 100%;
+		height: 1000rpx;
 		background-color: #CCCCCC;
+		font-size: 32rpx;
+		border-radius: 10rpx;
+		padding: 30rpx;
+		line-height: 50rpx;
 	}
 </style>

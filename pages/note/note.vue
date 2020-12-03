@@ -7,17 +7,19 @@
 				</view>
 			</view>
 		</view>
-		<view></view>
-		<note-catalog></note-catalog>
+		<catalog v-if="current === 0"></catalog>
+		<shareCatalog v-if="current === 1"></shareCatalog>
 	</view>
 </template>
 
 <script>
-	import noteCatalog from '@/pages/note/catalog/catalog';
+	import catalog from '@/pages/note/catalog/catalog';
+	import shareCatalog from '@/pages/note/catalog/share-catalog';
 	export default {
 		name: 'note',
 		components: {
-			noteCatalog
+			catalog,
+			shareCatalog
 		},
 		data() {
 			return {
@@ -52,6 +54,7 @@
 		background-color: #aedcae;
 		position: fixed;
 		z-index: 1;
+		text-align: center;
 	}
 
 	#note .note_head_row {

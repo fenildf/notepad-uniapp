@@ -3,13 +3,13 @@
 		<simple-slide-list :list="list" :button="buttonList" :border="true" @click="clickMethod" @change="changeMethod"></simple-slide-list>
 
 		<view class="add-wrap" hover-class="plus-hover">
-			<uni-icons type="plus" size="45" color="#79ffeb" @click="addCatalog"></uni-icons>
+			<uni-icons type="plus" size="45" color="#6ad8d8" @click="addCatalog"></uni-icons>
 		</view>
 
 		<s-popup position="center" v-model="visible">
 			<view class="catalog-popup">
-				<label class="catalog-label">笔记本名称</label>
-				<input value="你才不是一个没有故事的女同学"></input>
+				<label class="catalog-label">添加记事本</label>
+				<input class="uni-input" focus :value="popupVal" placeholder="请输入记事本名称"></input>
 				<button>确认</button>
 			</view>
 		</s-popup>
@@ -26,6 +26,7 @@
 		data() {
 			return {
 				visible: false,
+				popupVal: '',
 				list: [{
 						id: 1,
 						image: '../../static/note/note.png',
@@ -69,11 +70,16 @@
 			// 新增笔记本
 			addCatalog() {
 				console.log("新增笔记本")
+				this.viewNamePopup("")
+			},
+			viewNamePopup(name){
+				this.popupVal = name;
+				this.visible = true;
 			},
 			changeMethod(data, button, index) {
 				console.log('滑动按钮回调', data)
 				console.log('滑动按钮回调', button)
-				this.visible = true
+				this.viewNamePopup("滑动按钮回调")
 			},
 			clickMethod(data) {
 				console.log('点击行回调', data)
@@ -131,6 +137,8 @@
 			margin-top: 50upx;
 			margin-bottom: 50upx;
 			font-size: 35upx;
+			width: 80%;
+			margin-left: 10%;
 		}
 	}
 </style>

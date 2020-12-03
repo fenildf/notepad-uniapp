@@ -226,8 +226,8 @@
 
 					.icon-image {
 						border-radius: 10rpx;
-						width: 100rpx;
-						height: 90rpx;
+						width: 80rpx;
+						height: 80rpx;
 						float: left;
 					}
 					

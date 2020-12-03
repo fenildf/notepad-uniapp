@@ -153,10 +153,10 @@
 </script>
 
 <style>
-	page,
+	/* page,
 	view {
 		display: flex;
-	}
+	} */
 
 	page {
 		min-height: 100%;

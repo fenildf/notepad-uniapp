@@ -9,7 +9,7 @@
 		</view>
 
 		<view class="add-wrap" hover-class="plus-hover">
-			<uni-icons type="plus" size="45" color="#79ffeb" @click="addContent"></uni-icons>
+			<uni-icons type="plus" size="45" color="#6ad8d8" @click="addContent"></uni-icons>
 		</view>
 
 	</view>
