@@ -128,8 +128,103 @@
 			// #endif
 			// #ifdef MP-WEIXIN
 			WX_MP_getuserinfo(e) {
-				//微信小程序微信登录方法
+				var that = this
+				// 获取用户名  获取性别 获取头像 获取js_code去换取后台返回的openID
+				uni.login({
+					provider: 'weixin',
+					success: function(loginRes) {
+						let js_code = loginRes.code; //js_code可以给后台获取unionID或openID作为用户标识
+						// 获取用户信息
+						uni.getUserInfo({
+							provider: 'weixin',
+							success: function(infoRes) {
+								//infoRes里面有用户信息需要的话可以取一下
+								let username = infoRes.userInfo.nickName; //用户名
+								let gender = infoRes.userInfo.gender; //用户性别
+								let avatarUrl = infoRes.userInfo.avatarUrl; //头像
+								//判断是否授权
+								uni.getSetting({
+									success(res) {
+										console.log("授权：", res);
+										if (!res.authSetting['scope.userInfo']) {
+											//这里调用授权
+											console.log("当前未授权");
+										} else {
+											//用户已经授权过了
+											console.log("当前已授权");
+											// 弹出正在登录的弹框
+											uni.showLoading({
+												mask: true,
+												title: '正在登录···',
+												complete: () => {}
+											});
+											// 判断已授权调取接口并获取openId
+											that.$apiReq.req({ // 创建对象
+												url: '/ui/wxutil/loginByWx', // 示例请求路径
+												method: "post",
+												data: {
+													'code': js_code,
+												},
+												success: (res) => {
+													//需要openId 可以在这里打印出来
+													if (res.data.code == 202) {
+														// 登录成功后判断是否是第一次注册  如果是弹出选择身份页面
+														uni.navigateTo({
+															url: './registeredIdentity/registeredIdentity',
+															success: res => {},
+															fail: () => {},
+															complete: () => {}
+														});
+													} else if (res.data.code == 201) {
+														//跳转
+														uni.switchTab({
+															url: '../homePage/homePage',
+															success: res => {},
+															fail: () => {},
+															complete: () => {}
+														});
+													}
+												},
+											})
 
+										}
+									}
+								})
+							},
+							fail: function(res) {}
+						})
+					},
+					fail: function(res) {}
+				})
+
+
+
+
+
+
+				//微信小程序微信登录方法
+				uni.login({
+					provider: 'weixin',
+					success: function(loginRes) {
+						console.log(loginRes);
+					}
+				});
+
+				uni.getUserInfo({
+					success: (res) => {
+						this.userInfo = res.userInfo;
+						console.log(this.userInfo);
+						uni.showToast({
+							title: this.userInfo
+						});
+					},
+					fail: () => {
+						uni.showToast({
+							title: '授权失败'
+						});
+						console.log("未授权");
+					}
+				})
 			},
 			// #endif
 
@@ -226,8 +321,8 @@
 	}
 
 	.wx-login-btn {
-		width: 240rpx;
-		margin-top: 60rpx;
+		width: 240upx;
+		margin-top: 60upx;
 		background-color: #33CC33;
 	}
 

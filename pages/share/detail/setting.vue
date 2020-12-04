@@ -22,7 +22,7 @@
 			<s-popup position="center" v-model="visible">
 				<view class="setting-popup">
 					<label class="setting-label">添加成员</label>
-					<input class="uni-input" focus :value="popupVal" placeholder="请输入手机号码或者点滴记事本UID"></input>
+					<input class="uni-input" focus :value="popupVal" placeholder="请输入手机号码或者点滴UID"></input>
 					<button>确认</button>
 				</view>
 			</s-popup>

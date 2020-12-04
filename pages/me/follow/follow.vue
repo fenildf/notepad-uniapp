@@ -40,15 +40,18 @@
 	}
 
 	.image {
-		width: 80%;
-		margin-left: 10%;
+		width: 600upx;
+		margin-left: 75upx;
+		height: 600upx;
 	}
-	.icon-view{
+
+	.icon-view {
 		margin-top: 100rpx;
-		    color: #f90d0d;
-			    text-align: center;
+		color: #f90d0d;
+		text-align: center;
 	}
-	.icon-icon{
+
+	.icon-icon {
 		margin-left: 20rpx;
 		margin-right: 20rpx;
 	}
