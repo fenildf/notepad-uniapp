@@ -61,7 +61,13 @@
         "setting" : {
             "urlCheck" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "appid" : "wxacd4e2f45014f9c5",
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "调试"
+            }
+        }
     },
     "h5" : {
         "template" : "template.h5.html",

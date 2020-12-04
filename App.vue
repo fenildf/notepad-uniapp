@@ -1,5 +1,4 @@
 <script>
-	import './common/assets/font/iconfont.css';
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')

@@ -4,12 +4,12 @@
 			<view class="slide-box" v-for="(item, index) in listData" :key="index">
 				<view class="slide-list" @touchstart="touchStart($event, index)" @touchend="touchEnd($event, index)" @touchmove="touchMove($event, index)"
 				 @tap="recover(index)" :style="{ transform: 'translate3d(' + item.slide_x + 'px, 0, 0)' }">
-				 
 					<view class="now-message-info" hover-class="uni-item--hover" :style="{ width: windowWidth + 'px' }" @click="clickItemMethod(item)">
-						<image :src="item.image" class="icon-image"></image>
+						<image v-if="item.image" :src="item.image" class="icon-image"></image>
+						<Icon v-if="item.icon" :type="item.icon" size="60" class="icon-icon"></Icon>
 						<view class="list-right">{{ item.name }}</view>
+						<text class="num-text">{{item.num}}</text>
 					</view>
-
 					<view class="group-btn">
 						<view class="btn-div" v-for="(value, key) in button" :key="key" @click="clickMethod(item, value, index)" :style="{background: value.background}">{{value.title}}</view>
 					</view>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+	import Icon from '../atom-awesome-icon/Icon.vue'
 	export default {
 		name: 'simple-slide-list',
 		props: {
@@ -57,6 +58,9 @@
 				startTime: 0,
 				itemIndex: 0
 			};
+		},
+		components: {
+			Icon
 		},
 		mounted() {
 			this.listData = this.clone(this.list)
@@ -230,12 +234,21 @@
 						height: 80rpx;
 						float: left;
 					}
-					
+
+					.icon-icon {
+						margin-left: 20upx;
+					}
+
 					.list-right {
 						float: right;
 						position: absolute;
 						margin-left: 130rpx;
 						color: #393939;
+					}
+
+					.num-text {
+						position: fixed;
+						right: 30rpx;
 					}
 				}
 

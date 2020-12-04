@@ -26,6 +26,22 @@
 						rightDetail: '2019-03-17',
 						detail: '来都很好SDK计划书',
 						slide_x: 0
+					},
+					{
+						id: 3,
+						surname: '老杨',
+						title: '规划京津冀',
+						rightDetail: '2019-03-17',
+						detail: '来都很好SDK计划书',
+						slide_x: 0
+					},
+					{
+						id: 4,
+						icon: 'fa-clone',
+						title: '规划京津冀',
+						rightDetail: '2019-03-17',
+						detail: '来都很好SDK计划书',
+						slide_x: 0
 					}
 				]
 			}

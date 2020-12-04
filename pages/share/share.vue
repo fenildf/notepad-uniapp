@@ -113,7 +113,7 @@
 	.shares {
 		background: #fff;
 		flex: 1;
-		width: 740upx;
+		width: 750upx;
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: flex-start;

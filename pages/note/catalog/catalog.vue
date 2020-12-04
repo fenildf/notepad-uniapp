@@ -30,7 +30,8 @@
 				list: [{
 						id: 1,
 						image: '../../static/note/note.png',
-						name: '的撒个娇汇顶科技'
+						name: '的撒个娇汇顶科技',
+						num: 23
 					},
 					{
 						id: 2,
@@ -39,7 +40,17 @@
 					},
 					{
 						id: 3,
-						image: '../../static/note/note.png',
+						icon: 'fa-twitter',
+						name: '啊大大搭都是非常'
+					},
+					{
+						id: 4,
+						icon: 'fa-calendar-o',
+						name: '啊大大搭都是非常'
+					},
+					{
+						id: 5,
+						icon: 'fa-clone',
 						name: '啊大大搭都是非常'
 					}
 				],
