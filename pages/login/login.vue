@@ -80,6 +80,7 @@
 
 <script>
 	import uniIcons from '@/components/uni-icons/uni-icons.vue';
+	import { mapGetters, mapActions } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -113,6 +114,7 @@
 			this.windowWidth = system.windowWidth;
 		},
 		methods: {
+			...mapActions('user', ['login']),
 			// #ifdef APP-PLUS
 			wxlogin(type) {
 				let _this = this;
@@ -197,11 +199,6 @@
 					fail: function(res) {}
 				})
 
-
-
-
-
-
 				//微信小程序微信登录方法
 				uni.login({
 					provider: 'weixin',
@@ -257,8 +254,13 @@
 					})
 					return;
 				}
-				uni.showToast({
-					title: '登录成功'
+				this.login({
+					userCode: this.account_accountNum,
+					password: this.account_password
+				}).then(res => {
+					uni.showToast({
+						title: '登录成功'
+					});
 				})
 			},
 			clear_account_accountNum() {

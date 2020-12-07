@@ -2,6 +2,12 @@
 	<view>
 		<view class="input-box">
 			<view class="input-item">
+				<view class="input-label">用户昵称</view>
+				<view class="input-body">
+					<input v-model="userName" maxlength="11" style="margin-right: 160upx;" placeholder="请输入用户昵称" class="input">
+				</view>
+			</view>
+			<view class="input-item">
 				<view class="input-label">手机号</view>
 				<view class="input-body">
 					<input v-model="phone" maxlength="11" type="number" style="margin-right: 160upx;" placeholder="请输入手机号" class="input">
@@ -30,6 +36,7 @@
 </template>
 
 <script>
+	import { mapGetters, mapActions } from 'vuex';
 	let timer = '';
 	import {
 		checkPhone,
@@ -50,6 +57,7 @@
 		},
 		onLoad() {},
 		methods: {
+			...mapActions('user', ['register']),
 			isHidePasswordClick() {
 				this.isHidePassword = !this.isHidePassword
 			},
@@ -83,22 +91,34 @@
 				 */
 			},
 			submit() {
+				if(!this.userName) {
+					uni.showToast({
+						icon:'none',
+						title:'请输入用户昵称'
+					})
+					return;
+				}
 				if (!checkPhone(this.phone)) {
 					return;
 				};
 				if (!checkPwd(this.password)) {
 					return;
 				};
-				if (!checkCode(this.code)) {
+				if (this.password != this.rePassword) {
+					uni.showToast({
+						icon:'none',
+						title:'两次密码不一致'
+					})
 					return;
-				};
+				}
+				this.register({phone: this.phone, password: this.password, userName: this.userName})
 				/*
 				 * 注册逻辑
 				 */
-				this.$store.commit('update', ['isLogin', true]);
-				uni.reLaunch({
-					url: '/pages/index/index'
-				})
+				// this.$store.commit('update', ['isLogin', true]);
+				// uni.reLaunch({
+				// 	url: '/pages/index/index'
+				// })
 			}
 		}
 	}
