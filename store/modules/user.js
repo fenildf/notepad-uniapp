@@ -19,7 +19,6 @@ const mutations = {
 const actions = {
   async login({ commit }, loginUser) {
     const { data } = await API.login(loginUser)
-	debugger
     commit('setUserInfo', data)
   },
   async register({ commit }, loginUser) {

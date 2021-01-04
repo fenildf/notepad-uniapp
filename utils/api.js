@@ -13,7 +13,7 @@ const api = {
 
 	login: (data) => request.post('/login', data),
 	register: (data) => request.post('/register', data),
-
+	getNoteBookPageSelf: () => request.get('/notebook/page/self'),
 
 
 

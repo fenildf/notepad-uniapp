@@ -261,6 +261,10 @@
 					uni.showToast({
 						title: '登录成功'
 					});
+					//进入点滴页面
+					uni.switchTab({
+						url: '/pages/note/note'
+					});
 				})
 			},
 			clear_account_accountNum() {

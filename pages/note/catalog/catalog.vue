@@ -36,22 +36,26 @@
 					{
 						id: 2,
 						image: '../../static/note/note.png',
-						name: '家是件好事'
+						name: '家是件好事',
+						num: 23
 					},
 					{
 						id: 3,
 						icon: 'fa-twitter',
-						name: '啊大大搭都是非常'
+						name: '啊大大搭都是非常',
+						num: 23
 					},
 					{
 						id: 4,
 						icon: 'fa-calendar-o',
-						name: '啊大大搭都是非常'
+						name: '啊大大搭都是非常',
+						num: 23
 					},
 					{
 						id: 5,
 						icon: 'fa-clone',
-						name: '啊大大搭都是非常'
+						name: '啊大大搭都是非常',
+						num: 23
 					}
 				],
 				buttonList: [{
