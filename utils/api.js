@@ -14,7 +14,7 @@ const api = {
 	login: (data) => request.post('/login', data),
 	register: (data) => request.post('/register', data),
 	getNoteBookPageSelf: () => request.get('/notebook/page/self'),
-
+	getNoteBookPageShare: () => request.get('/notebook/page/share'),
 
 
 

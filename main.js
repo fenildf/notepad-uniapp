@@ -6,8 +6,8 @@ Vue.config.productionTip = false
 Vue.prototype.$store = store
 App.mpType = 'app'
 
-import API from '@/utils/api.js'
-Vue.prototype.$api = API
+import api from '@/utils/api.js'
+Vue.prototype.$api = api
 
 const app = new Vue({
 	store,

@@ -34,8 +34,17 @@
 		methods: {
 			menu: function(index) {
 				this.current = index;
+				if (index === 1) {
+					this.getNoteBookPageSelf();
+				} else if (index === 2) {
+					
+				}
 			},
-
+			getNoteBookPageSelf() {
+				this.$api.getNoteBookPageSelf().then(res =>{
+					console.log(res)
+				});
+			}
 		}
 	}
 </script>
