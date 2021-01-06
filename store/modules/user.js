@@ -18,15 +18,15 @@ const mutations = {
 
 const actions = {
   async login({ commit }, loginUser) {
-    const { data } = await API.login(loginUser)
+    const data = await API.login(loginUser)
     commit('setUserInfo', data)
   },
   async register({ commit }, loginUser) {
-    const { data } = await API.register(loginUser)
+    const data = await API.register(loginUser)
     commit('setUserInfo', data)
   },
   async logout({ commit, state }) {
-    const { data } = await API.logout()
+    const data = await API.logout()
     commit('', null)
   }
 }

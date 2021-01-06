@@ -1,6 +1,6 @@
 <template>
 	<view class="catalog">
-		<simple-slide-list :list="list" :button="buttonList" :border="true" @click="clickMethod" @change="changeMethod"></simple-slide-list>
+		<simple-slide-list :list="page.records" :button="buttonList" :border="true" @click="clickMethod" @change="changeMethod"></simple-slide-list>
 
 		<view class="add-wrap" hover-class="plus-hover">
 			<uni-icons type="plus" size="45" color="#6ad8d8" @click="addCatalog"></uni-icons>
@@ -27,37 +27,11 @@
 			return {
 				visible: false,
 				popupVal: '',
-				list: [{
-						id: 1,
-						image: '../../static/note/note.png',
-						name: '的撒个娇汇顶科技',
-						num: 23
-					},
-					{
-						id: 2,
-						image: '../../static/note/note.png',
-						name: '家是件好事',
-						num: 23
-					},
-					{
-						id: 3,
-						icon: 'fa-twitter',
-						name: '啊大大搭都是非常',
-						num: 23
-					},
-					{
-						id: 4,
-						icon: 'fa-calendar-o',
-						name: '啊大大搭都是非常',
-						num: 23
-					},
-					{
-						id: 5,
-						icon: 'fa-clone',
-						name: '啊大大搭都是非常',
-						num: 23
-					}
-				],
+				page: {
+					records: [],
+					current: 1,
+					size: 10
+				},
 				buttonList: [{
 						title: '重命名',
 						background: '#78efa8'
@@ -74,7 +48,15 @@
 			uniIcons,
 			sPopup
 		},
+		mounted() {
+			this.getNoteBookPageSelf()
+		},
 		methods: {
+			getNoteBookPageSelf() {
+				this.$api.getNoteBookPageSelf().then(res => {
+					this.page.records = res.records
+				});
+			},
 			// 跳转笔记本笔记列表
 			gotoContent() {
 				console.log("跳转笔记本笔记列表")
@@ -87,7 +69,7 @@
 				console.log("新增笔记本")
 				this.viewNamePopup("")
 			},
-			viewNamePopup(name){
+			viewNamePopup(name) {
 				this.popupVal = name;
 				this.visible = true;
 			},

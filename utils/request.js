@@ -43,7 +43,7 @@ request.interceptors.response.use((response, promise) => {
 			}
 		});
 	}
-	return promise.resolve(response.data)
+	return promise.resolve(response.data.data)
 }, (err, promise) => {
 	wx.hideNavigationBarLoading()
 	errorPrompt(err)
