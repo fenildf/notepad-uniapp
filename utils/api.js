@@ -5,49 +5,29 @@ const baseURL = 'http://192.168.8.118:7080'
 
 request.config.baseURL = baseURL
 
-const dailyRequest = (id) => request.post('/v1/daily', {
-	url: `/api/4/news/${id}`
-})
-
 const api = {
-
+	// 登录
 	login: (data) => request.post('/login', data),
+	// 注册
 	register: (data) => request.post('/register', data),
-	getNoteBookPageSelf: () => request.get('/notebook/page/self'),
-	getNoteBookPageShare: () => request.get('/notebook/page/share'),
-
-
-
-
-
-
-
-	getNewIds: () => request.get(`/v1/one?${encodeURI('url=/api/hp/idlist/0?version=3.5.0&platform=android')}`),
-
-	getHomeData: (id) => request.get(
-		`/v1/one?${encodeURI('url=/api/hp/detail/' + id + '?version=3.5.0&platform=android')}`),
-
-	// read
-	getReadList: () => request.get(`/v1/one?${encodeURI('url=/api/reading/index/?version=3.5.0&platform=android')}`),
-
-	getReadDetail: (type, id) => request.get(
-		`/v1/one?${encodeURI('url=/api/' + type + '/' + id + '?version=3.5.0&platform=android')}`),
-
-	getReadComment: (id) => request.get(
-		`/v1/one?${encodeURI('url=/api/comment/praiseandtime/essay/' + id + '/0?version=3.5.0&platform=android')}`),
-
-	getMovieList: () => request.post('/v1/two', {
-		url: '/api/channel/movie/more/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android'
-	}),
-
-	getMovieDetail: (id) => request.get(
-		`/v1/one?${encodeURI('url=/api/movie/' + id + '/story/1/0?version=3.5.0&platform=android')}`),
-
-	getWeather: (location) => request.get(`/v1/weather?location=${location}`),
-
-	getZhList: () => dailyRequest('latest'),
-
-	getZhDtl: (id) => dailyRequest(id)
+	// 获取我的笔记本
+	getNoteBookPageSelf: (pageNo) => request.get(`/notebook/page/self?pageNo=${pageNo}`),
+	// 获取共享笔记本
+	getNoteBookPageShare: (pageNo) => request.get(`/notebook/page/share?pageNo=${pageNo}`),
+	// 新增笔记本
+	saveNotebook: (data) => request.post('/notebook', data),
+	// 重命名笔记本
+	updateNotebook: (id, name) => request.put(`/notebook/rename?id=${id}&name=${name}`),
+	// 删除笔记本
+	delNotebook: (id) => request.delete(`/notebook/${id}`),
+	// 获取笔记本里的笔记
+	getNotePage: (notebookId, pageNo) => request.get(`/note/page?notebookId=${notebookId}&pageNo=${pageNo}`),
+	// 获取笔记详情
+	getNote: (id) => request.get(`/note/${id}`),
+	// 保存笔记
+	saveNote: (data) => request.post('/note', data),
+	// 更新笔记
+	updateNote: (data) => request.put('/note', data),
 }
 
 export default api

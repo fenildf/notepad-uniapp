@@ -1,14 +1,16 @@
 <template>
 	<view class="content">
-		<view class="content-line" @click="gotoText()">
-			<text>我的小秘密</text>
-			<uni-icons type="arrowright" size="18" color="#282d2c" class="content-uni-icons"></uni-icons>
-		</view>
-		<view class="content-line">
-			<text>各环节的收购价款是</text>
-		</view>
+		<k-scroll-view ref="k-scroll-view" :refreshType="scroll.refreshType" :refreshTip="scroll.refreshTip" :loadTip="scroll.loadTip"
+		 :loadingTip="scroll.loadingTip" :emptyTip="scroll.emptyTip" :touchHeight="scroll.touchHeight" :height="scroll.height"
+		 :bottom="scroll.bottom" :autoPullUp="scroll.autoPullUp" :stopPullDown="scroll.stopPullDown" @onPullDown="handlePullDown"
+		 @onPullUp="handleLoadMore">
+			<view class="content-line" @click="gotoText(item.id, item.name)" v-for="(item, index) in list" :key="index">
+				<text>{{item.name}}</text>
+				<uni-icons type="arrowright" size="18" color="#282d2c" class="content-uni-icons"></uni-icons>
+			</view>
+		</k-scroll-view>
 
-		<view class="add-wrap" hover-class="plus-hover">
+		<view class="add-wrap" hover-class="plus-hover" v-if="!options.disabled">
 			<uni-icons type="plus" size="45" color="#6ad8d8" @click="addContent"></uni-icons>
 		</view>
 
@@ -16,24 +18,79 @@
 </template>
 
 <script>
-	import uniIcons from "@/components/uni-icons/uni-icons.vue"
+	import uniIcons from "@/components/uni-icons/uni-icons.vue";
+	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
+
 	export default {
 		data() {
 			return {
-
+				options: {},
+				list: [],
+				page: {
+					records: [],
+					current: 1,
+					size: 10
+				},
+				scroll: {
+					refreshType: 'custom',
+					refreshTip: '正在下拉',
+					loadTip: '获取更多数据',
+					loadingTip: '正在加载中...',
+					emptyTip: '--我是有底线的--',
+					touchHeight: 50,
+					height: 0,
+					bottom: 50,
+					autoPullUp: true,
+					stopPullDown: true,
+				}
 			}
 		},
 		components: {
-			uniIcons
+			uniIcons,
+			kScrollView
 		},
+		onLoad(options) {
+			this.options = options
+			uni.setNavigationBarTitle({
+				title: options.notebookName
+			});
+			this.getNotePage(1)
+		},
+		mounted() {},
 		methods: {
-			gotoText() {
+			getNotePage(pageNo) {
+				this.$api.getNotePage(this.options.notebookId, pageNo).then(res => {
+					this.page = res
+					this.list = pageNo === 1 ? this.page.records : this.list.concat(this.page.records);
+				})
+			},
+			// 查看详情
+			gotoText(noteId, noteName) {
 				uni.navigateTo({
-					url: '/pages/note/text/text'
+					url: '/pages/note/text/text?noteId=' + noteId + '&noteName=' + noteName + "&disabled=" + true
 				});
 			},
+			// 跳转新增笔记
 			addContent() {
-				console.log("新增笔记")
+				uni.navigateTo({
+					url: '/pages/note/edit/edit?notebookId=' + this.options.notebookId
+				})
+			},
+			// 下拉刷新
+			handlePullDown(stopLoad) {
+				this.getNotePage(1)
+				stopLoad ? stopLoad() : '';
+			},
+			// 上拉加载
+			handleLoadMore(stopLoad) {
+				if (this.page.current < this.page.pages) {
+					this.getNotePage(++this.page.current)
+					stopLoad ? stopLoad() : '';
+				} else {
+					stopLoad ? stopLoad({
+						isEnd: true
+					}) : '';
+				}
 			}
 		}
 	}

@@ -36,7 +36,7 @@
 				this.current = index;
 			}
 		},
-		onPullDownRefresh(){
+		onPullDownRefresh() {
 			console.log("xia");
 			uni.stopPullDownRefresh();
 		},

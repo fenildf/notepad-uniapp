@@ -1,11 +1,10 @@
 <template>
 	<view>
 		<view class="text">
-			<rich-text>亲爱的小伙伴，非常歉意。该书版权到期，不再提供在线阅读服务。我们会竭尽全力继续与版权方协商，感谢您一直以来的支持。
-			</rich-text>
+			<rich-text v-html="note.content"></rich-text>
 		</view>
 
-		<view class="add-wrap" hover-class="plus-hover">
+		<view class="add-wrap" hover-class="plus-hover" v-if="!options.disabled">
 			<uni-icons type="compose" size="30" color="#4a4a4a" @click="gotoEdit"></uni-icons>
 		</view>
 
@@ -17,20 +16,34 @@
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	export default {
 		data() {
-			return {}
+			return {
+				note: {
+					content: '内容记载中...'
+				},
+				options: {}
+			}
 		},
 		components: {
 			uniIcons
 		},
-		mounted() {
+		onLoad(options) {
+			this.options = options
 			uni.setNavigationBarTitle({
-				title: "title"
+				title: options.noteName
 			});
+			this.getNote()
 		},
+		mounted() {},
 		methods: {
+			// 编辑
 			gotoEdit() {
 				uni.navigateTo({
-					url: '/pages/note/edit/edit'
+					url: '/pages/note/edit/edit?noteId=' + this.options.noteId
+				})
+			},
+			getNote() {
+				this.$api.getNote(this.options.noteId).then(res => {
+					this.note = res;
 				})
 			}
 		}
@@ -44,6 +57,7 @@
 		background: #e4cba3;
 		font-size: 32rpx;
 		line-height: 60rpx;
+		white-space: pre;
 	}
 
 	.add-wrap {
