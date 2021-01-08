@@ -14,7 +14,7 @@
 		<s-popup position="center" v-model="visible">
 			<view class="catalog-popup">
 				<label class="catalog-label">添加记事本</label>
-				<input class="uni-input" focus v-model="notebook.name" placeholder="请输入记事本名称"></input>
+				<input class="uni-input" focus v-model="notebook.name" placeholder="请输入记事本名称" maxlength="8"></input>
 				<button @click="addNotebook">确认</button>
 			</view>
 		</s-popup>
@@ -27,9 +27,7 @@
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import sPopup from '@/components/s-popup/index.vue';
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
-	import {
-		toast
-	} from '@/common/common.js'
+	import { toast } from '@/common/common.js'
 
 	export default {
 		data() {
@@ -85,7 +83,7 @@
 			// 跳转笔记本笔记列表
 			gotoContent(notebookId, notebookName) {
 				uni.navigateTo({
-					url: '/pages/note/content/content?notebookId=' + notebookId + "&notebookName=" + notebookName
+					url: '/pages/note/content/content?notebookId=' + notebookId + "&notebookName=" + notebookName + "&edit=edit"
 				});
 			},
 			// 新增笔记本弹框
@@ -141,9 +139,7 @@
 					this.getNoteBookPageSelf(++this.page.current)
 					stopLoad ? stopLoad() : '';
 				} else {
-					stopLoad ? stopLoad({
-						isEnd: true
-					}) : '';
+					stopLoad ? stopLoad({ isEnd: true }) : '';
 				}
 			},
 			// 回到顶部

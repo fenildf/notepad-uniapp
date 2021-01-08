@@ -10,7 +10,7 @@
 			</view>
 		</k-scroll-view>
 
-		<view class="add-wrap" hover-class="plus-hover" v-if="!options.disabled">
+		<view class="add-wrap" hover-class="plus-hover" v-if="options.edit === 'edit'">
 			<uni-icons type="plus" size="45" color="#6ad8d8" @click="addContent"></uni-icons>
 		</view>
 
@@ -67,7 +67,7 @@
 			// 查看详情
 			gotoText(noteId, noteName) {
 				uni.navigateTo({
-					url: '/pages/note/text/text?noteId=' + noteId + '&noteName=' + noteName + "&disabled=" + true
+					url: '/pages/note/text/text?noteId=' + noteId + '&noteName=' + noteName + "&edit=" + this.options.edit
 				});
 			},
 			// 跳转新增笔记
@@ -87,9 +87,7 @@
 					this.getNotePage(++this.page.current)
 					stopLoad ? stopLoad() : '';
 				} else {
-					stopLoad ? stopLoad({
-						isEnd: true
-					}) : '';
+					stopLoad ? stopLoad({ isEnd: true }) : '';
 				}
 			}
 		}

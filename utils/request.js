@@ -18,14 +18,22 @@ request.interceptors.request.use((request) => {
 request.interceptors.response.use((response, promise) => {
 	wx.hideNavigationBarLoading()
 	if (!(response && response.data)) {
-	  errorPrompt(response)
+		errorPrompt(response)
 	}
 	// 错误请求：0-异常，-1-token不正确，-2-token过期
-	if(response.data.status <= 0) {
+	if (response.data.status <= 0) {
 		uni.showToast({
-			icon:'none',
+			icon: 'none',
 			title: response.data.msg
 		});
+		// 跳转登录
+		if (response.data.status === -1 || response.data.status === -2) {
+			setTimeout(function() {
+				uni.reLaunch({
+					url: '/pages/login/login'
+				})
+			}, 1000);
+		}
 		return promise.reject(response.data.msg)
 	}
 	let token = response.headers["yanger-general-backend-token"]
@@ -33,10 +41,10 @@ request.interceptors.response.use((response, promise) => {
 		uni.setStorage({
 			key: 'notepad-token',
 			data: token[0],
-			success: function () {
+			success: function() {
 				uni.getStorage({
 					key: 'notepad-token',
-					success: function (res) {
+					success: function(res) {
 						console.log(res.data);
 					}
 				});

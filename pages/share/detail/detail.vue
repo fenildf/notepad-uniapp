@@ -1,5 +1,6 @@
 <template>
 	<view id="detail">
+
 		<view class="detail_head">
 			<view class="detail_head_row">
 				<view v-for="(item,index) in head" v-on:click="menu(index)">
@@ -7,19 +8,21 @@
 				</view>
 			</view>
 		</view>
+
 		<view class="detail-content">
-			<simple-slide-list v-show="current === 0" :list="members" :button="buttonList" :border="true" @click="memberClick"
-			 @change="memberChange"></simple-slide-list>
-			<simple-slide-list v-show="current === 1" :list="catalogs" :button="buttonList" :border="true" @click="catalogClick"
+			<simple-slide-list v-show="current === 0" :list="shareDetail.members" :button="buttonList" :border="true" @change="memberChange"></simple-slide-list>
+			<simple-slide-list v-show="current === 1" :list="shareDetail.notebooks" :button="buttonList" :border="true" @click="catalogClick"
 			 @change="catalogChange"></simple-slide-list>
-			 <setting v-show="current === 2"></setting>
+			<setting ref="setting" v-show="current === 2" :shareId="options.shareId" @flush="getShare"></setting>
 		</view>
+
 	</view>
 </template>
 
 <script>
 	import simpleSlideList from "@/components/simple-slide-list/simple-slide-list.vue"
 	import setting from "./setting.vue"
+
 	export default {
 		components: {
 			simpleSlideList,
@@ -39,65 +42,57 @@
 					title: '移除',
 					background: '#ff3b32'
 				}],
-				members: [{
-						id: 1,
-						image: '../../static/share/member.png',
-						name: '的撒个娇汇顶科技'
-					},
-					{
-						id: 2,
-						image: '../../static/share/member.png',
-						name: '家是件好事'
-					},
-					{
-						id: 3,
-						image: '../../static/share/member.png',
-						name: '啊大大搭都是非常'
-					}
-				],
-				catalogs: [{
-						id: 1,
-						image: '../../static/share/wdzl.png',
-						name: '的撒个娇汇顶科技'
-					},
-					{
-						id: 2,
-						image: '../../static/share/wdzl.png',
-						name: '家是件好事'
-					},
-					{
-						id: 3,
-						image: '../../static/share/wdzl.png',
-						name: '啊大大搭都是非常'
-					}
-				],
+				options: {},
+				shareDetail: {
+					share: {},
+					members: [],
+					notebooks: []
+				}
 			}
 		},
-		onLoad(data) {
-			console.log('获取到id:' + data.id);
+		onLoad(options) {
+			this.options = options;
+			this.getShare();
 		},
 		methods: {
 			menu(index) {
 				this.current = index;
-				console.log(index)
 			},
+			// 获取共享组详情
+			getShare() {
+				this.$api.getShare(this.options.shareId).then(res => {
+					this.shareDetail = res
+					this.shareDetail.members.forEach(item => {
+						item.image = '../../static/share/member.png';
+						item.name = item.userName + "（" + item.uid + "）";
+					});
+				})
+			},
+			// 移除成员
 			memberChange(data, button, index) {
-				console.log('滑动按钮回调', data)
-				console.log('滑动按钮回调', button)
-				this.visible = true
+				this.$api.delShareMember(this.options.shareId, data.id).then(res => {
+					this.getShare();
+				})
 			},
-			memberClick(data) {
-				console.log('点击行回调', data)
-				this.gotoContent()
-			},
+			// 移除笔记本
 			catalogChange(data, button, index) {
-				console.log('滑动按钮回调', data)
-				console.log('滑动按钮回调', button)
-				this.visible = true
+				this.$api.delShareNotebook(this.options.shareId, data.id).then(res => {
+					this.getShare();
+					this.$refs.setting.getAllNotebook();
+				})
 			},
+			// 笔记本详情
 			catalogClick(data) {
-				console.log('点击行回调', data)
-				this.gotoContent()
+				uni.navigateTo({
+					url: '/pages/note/content/content?notebookId=' + data.id + "&notebookName=" + data.name
+				});
+			},
+			// 下拉刷新
+			onPullDownRefresh() {
+				this.getShare();
+				setTimeout(function() {
+					uni.stopPullDownRefresh();
+				}, 1000);
 			}
 		}
 	}

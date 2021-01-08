@@ -15,6 +15,7 @@
 <script>
 	import catalog from '@/pages/note/catalog/catalog';
 	import shareCatalog from '@/pages/note/catalog/share-catalog';
+	
 	export default {
 		name: 'note',
 		components: {
@@ -31,13 +32,32 @@
 				}]
 			}
 		},
+		onLoad() {
+			this.checkLogin()
+		},
 		methods: {
 			menu: function(index) {
 				this.current = index;
+			},
+			// 校验登录
+			checkLogin() {
+				const token = uni.getStorageSync('notepad-token')
+				if (!token) {
+					uni.showToast({
+						icon: 'none',
+						title: "未检测到用户信息，请先进行登录",
+						duration: 1000
+					});
+					setTimeout(function() {
+						uni.reLaunch({
+							url: '/pages/login/login'
+						})
+					}, 1000);
+					return false
+				}
 			}
 		},
 		onPullDownRefresh() {
-			console.log("xia");
 			uni.stopPullDownRefresh();
 		},
 	}

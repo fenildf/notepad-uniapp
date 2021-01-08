@@ -13,7 +13,7 @@
 			"path": "pages/share/share",
 			"style": {
 				"navigationBarTitleText": "共享组",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 
 		},
@@ -74,7 +74,7 @@
 			"path": "pages/share/detail/detail",
 			"style": {
 				"navigationBarTitleText": "共享组详情",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 		},
 		{

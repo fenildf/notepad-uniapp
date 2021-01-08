@@ -4,7 +4,7 @@
 			<rich-text v-html="note.content"></rich-text>
 		</view>
 
-		<view class="add-wrap" hover-class="plus-hover" v-if="!options.disabled">
+		<view class="add-wrap" hover-class="plus-hover" v-if="options.edit === 'edit'">
 			<uni-icons type="compose" size="30" color="#4a4a4a" @click="gotoEdit"></uni-icons>
 		</view>
 
@@ -14,6 +14,7 @@
 
 <script>
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
+	
 	export default {
 		data() {
 			return {
@@ -28,8 +29,8 @@
 		},
 		onLoad(options) {
 			this.options = options
-			uni.setNavigationBarTitle({
-				title: options.noteName
+			uni.setNavigationBarTitle({ 
+				title: options.noteName ,
 			});
 			this.getNote()
 		},

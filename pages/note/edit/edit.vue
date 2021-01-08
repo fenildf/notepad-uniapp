@@ -2,7 +2,7 @@
 	<view class="container">
 		<view>
 			<view class="title">笔记标题：</view>
-			<input class="uni-input" focus placeholder="请输入笔记标题" v-model="note.name" />
+			<input class="uni-input" focus placeholder="请输入笔记标题" v-model="note.name" maxlength="12" />
 		</view>
 		<editor id="editor" class="ql-container" :placeholder="placeholder" @ready="onEditorReady" @input="inputChange"></editor>
 		<suspend-menu :micon1="micon1" :micon2="micon2" :micon3="micon3" @click="iconClick"></suspend-menu>
@@ -11,9 +11,7 @@
 
 <script>
 	import suspendMenu from '@/components/suspend-menu/suspend-menu.vue'
-	import {
-		toast
-	} from '@/common/common.js'
+	import { toast } from '@/common/common.js'
 
 	export default {
 		data() {

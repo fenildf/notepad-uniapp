@@ -1,17 +1,18 @@
 <template>
 	<view class="index">
 		<view class="shares">
-			<block v-for="value in data" :key="value.id">
-				<view class="share" @tap="goList(value)">
+			<block v-for="item in shares" :key="item.id">
+				<view class="share" @tap="viewDetail(item.id)">
 					<view class="count-span">
 						<br style="height: 22rpx;">
-						<span class="share-text">成员：9</span>
+						<span class="share-text">成员 {{item.memberNum}}</span>
 						<br>
-						<span class="share-text">笔记：88</span>
+						<span class="share-text">笔记本 {{item.notebookNum}}</span>
 					</view>
-					<text class="share-text">{{ value.type }}</text>
+					<text class="share-text share-name">{{ item.name }}</text>
 				</view>
 			</block>
+
 			<view class="share" @click="addShareView">
 				<view class="count-span add-count-span">
 					<uni-icons type="plusempty" size="40" color="#ffffff"></uni-icons>
@@ -22,8 +23,8 @@
 			<s-popup position="center" v-model="visible">
 				<view class="popup-view">
 					<label class="popup-label">添加共享组</label>
-					<input class="uni-input" focus :value="popupVal" placeholder="添加共享组名称"></input>
-					<button>确认</button>
+					<input class="uni-input" focus v-model="share.name" placeholder="请输入共享组名称" maxlength="8"></input>
+					<button @click="addShare">确认</button>
 				</view>
 			</s-popup>
 
@@ -34,6 +35,7 @@
 <script>
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import sPopup from '@/components/s-popup/index.vue';
+	import { toast } from '@/common/common.js'
 
 	let index = 0;
 	export default {
@@ -41,69 +43,52 @@
 			return {
 				visible: false,
 				popupVal: '',
-				data: [{
-						type: '动物',
-						id: index++,
-						types: 1,
-						icon: 'http://placehold.it/150x150'
-					},
-					{
-						type: '风景',
-						id: index++,
-						types: 2,
-						icon: 'http://placehold.it/150x150'
-					},
-					{
-						type: '建筑',
-						id: index++,
-						types: 3,
-						icon: 'http://placehold.it/150x150'
-					},
-					{
-						type: '美女',
-						id: index++,
-						types: 4,
-						icon: 'http://placehold.it/150x150'
-					},
-					{
-						type: '汽车',
-						id: index++,
-						types: 5,
-						icon: 'http://placehold.it/150x150'
-					},
-					{
-						type: '运动',
-						id: index++,
-						types: 6,
-						icon: 'http://placehold.it/150x150'
-					},
-					{
-						type: '动物',
-						id: index++,
-						types: 1,
-						icon: 'http://placehold.it/150x150'
-					},
-					{
-						type: '风景',
-						id: index++,
-						types: 2,
-						icon: 'http://placehold.it/150x150'
-					}
-				]
+				shares: [],
+				share: {}
 			};
 		},
 		components: {
 			uniIcons,
 			sPopup
 		},
+		onLoad() {
+			this.getShareList();
+		},
 		methods: {
-			goList(value) {
+			// 获取共享组
+			getShareList() {
+				this.$api.getShareList().then(res => {
+					this.shares = res;
+				})
+			},
+			// 查看共享组详情
+			viewDetail(shareId) {
 				uni.navigateTo({
-					url: '/pages/share/detail/detail?id=' + 2
+					url: '/pages/share/detail/detail?shareId=' + shareId
 				});
 			},
+			// 新增共享组弹框
 			addShareView() {
 				this.visible = true;
+			},
+			// 新增共享组
+			addShare() {
+				if (!this.share.name) {
+					toast("请输入共享组名称")
+					return;
+				}
+				this.$api.saveShare(this.share).then(res => {
+					this.visible = false;
+					this.share = {}
+					this.getShareList();
+				})
+			},
+			// 下拉刷新
+			onPullDownRefresh() {
+				this.getShareList();
+				setTimeout(function() {
+					uni.stopPullDownRefresh();
+				}, 1000);
 			}
 		}
 	};
@@ -122,7 +107,7 @@
 
 		.share {
 			display: block;
-			width: 180upx;
+			width: 186upx;
 			height: 270upx;
 			padding: 24upx;
 			box-sizing: border-box;
@@ -144,6 +129,11 @@
 		.share-text {
 			font-size: 28upx;
 			color: #555555;
+		}
+
+		.share-name {
+			color: #0897fd;
+			display: inline-flex;
 		}
 
 		.popup-view {

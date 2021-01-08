@@ -8,7 +8,7 @@
 						<image v-if="item.image" :src="item.image" class="icon-image"></image>
 						<Icon v-if="item.icon" :type="item.icon" size="60" class="icon-icon"></Icon>
 						<view class="list-right">{{ item.name }}</view>
-						<text class="num-text">{{item.num}}</text>
+						<text class="num-text">{{item.num }}</text>
 					</view>
 					<view class="group-btn">
 						<view class="btn-div" v-for="(value, key) in button" :key="key" @click="clickMethod(item, value, index)" :style="{background: value.background}">{{value.title}}</view>
@@ -247,8 +247,10 @@
 					}
 
 					.num-text {
-						position: fixed;
-						right: 30rpx;
+						float: right;
+						position: absolute;
+						right: 32rpx;
+						color: #a9a9a9;
 					}
 				}
 

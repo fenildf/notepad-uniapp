@@ -14,9 +14,7 @@
 <script>
 	import markSlideList from "@/components/mark-slide-list/mark-slide-list.vue"
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
-	import {
-		dateFormat
-	} from '@/common/common.js'
+	import { dateFormat } from '@/common/common.js'
 
 	export default {
 		data() {
@@ -63,7 +61,7 @@
 			// 跳转笔记本笔记列表
 			gotoContent(notebookId, notebookName) {
 				uni.navigateTo({
-					url: '/pages/note/content/content?notebookId=' + notebookId + "&notebookName=" + notebookName + "&disabled=" + true
+					url: '/pages/note/content/content?notebookId=' + notebookId + "&notebookName=" + notebookName
 				});
 			},
 			clickMethod(data) {
@@ -80,9 +78,7 @@
 					this.getNoteBookPageShare(++this.page.current)
 					stopLoad ? stopLoad() : '';
 				} else {
-					stopLoad ? stopLoad({
-						isEnd: true
-					}) : '';
+					stopLoad ? stopLoad({ isEnd: true }) : '';
 				}
 			}
 		}

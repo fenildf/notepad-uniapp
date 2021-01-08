@@ -18,7 +18,7 @@
 			<view class="flex-wrap">
 				<template v-for="item in visibleDays" :Key="item.day">
 					<view class="day-box flex-column">
-						<text class="day" @click="clickDate(item.day)" :style="[
+						<text class="day" @click="clickDate(item.day, item.data)" :style="[
 							isToday(item.day) && todayObj,
 							isClick(item.day) && selectedObj,
 						]"
@@ -208,7 +208,7 @@
 				} = getYearMonthDay(date);
 				return year === y && month === m && day === d;
 			},
-			clickDate(date) { // 点击日期
+			clickDate(date, data) { // 点击日期
 				let {
 					year,
 					month,
@@ -223,7 +223,7 @@
 					year,
 					month,
 					day
-				})
+				}, data)
 			},
 			prevMonth() { // 上一月
 				let {
