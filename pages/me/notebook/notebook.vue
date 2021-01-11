@@ -12,6 +12,7 @@
 <script>
 	import markSlideList from "@/components/mark-slide-list/mark-slide-list.vue"
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
+	import { dateFormat } from '@/common/common.js'
 
 	export default {
 		data() {
@@ -50,7 +51,7 @@
 					res.records.forEach(item => {
 						item.title = item.name;
 						item.rightDetail = dateFormat("YYYY-mm-dd", new Date(item.createTime));
-						item.detail = item.userName + "的共享";
+						item.detail = item.userName + "的笔记本";
 					});
 					this.page = res
 					this.list = pageNo === 1 ? this.page.records : this.list.concat(this.page.records);
