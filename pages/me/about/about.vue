@@ -1,6 +1,6 @@
 <template>
 	<view class="about-view">
-		<text>Nothing to say about it.</text>
+		<text>Nothing to say about this.</text>
 	</view>
 </template>
 

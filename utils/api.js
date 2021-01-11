@@ -1,20 +1,22 @@
 import request from './request'
 
 // const baseURL = `https://petrify.cc`
-const baseURL = 'http://192.168.80.241:7080'
+const baseURL = 'http://192.168.8.118:7080'
 
 request.config.baseURL = baseURL
 
 const api = {
 	// 登录
 	login: (data) => request.post('/login', data),
+	// 微信授权登录
+	wxLogin: (data) => request.post('/wxLogin', data),
 	// 注册
 	register: (data) => request.post('/register', data),
 
 	// 获取我的笔记本
-	getNoteBookPageSelf: (pageNo) => request.get(`/notebook/page/self?pageNo=${pageNo}`),
+	getNoteBookPageSelf: (pageNo) => request.get(`/notebook/page/self?pageNo=${pageNo}&pageSize=20`),
 	// 获取共享笔记本
-	getNoteBookPageShare: (pageNo) => request.get(`/notebook/page/share?pageNo=${pageNo}`),
+	getNoteBookPageShare: (pageNo) => request.get(`/notebook/page/share?pageNo=${pageNo}&pageSize=20`),
 	// 新增笔记本
 	saveNotebook: (data) => request.post('/notebook', data),
 	// 重命名笔记本
@@ -22,7 +24,7 @@ const api = {
 	// 删除笔记本
 	delNotebook: (id) => request.delete(`/notebook/${id}`),
 	// 获取笔记本里的笔记
-	getNotePage: (notebookId, pageNo) => request.get(`/note/page?notebookId=${notebookId}&pageNo=${pageNo}`),
+	getNotePage: (notebookId, pageNo) => request.get(`/note/page?notebookId=${notebookId}&pageNo=${pageNo}&pageSize=20`),
 	// 获取笔记详情
 	getNote: (id) => request.get(`/note/${id}`),
 	// 保存笔记
@@ -60,6 +62,16 @@ const api = {
 	
 	// 我的信息
 	getMineData: () => request.get('/mine'),
+	// 提交建议
+	addSuggest: (data) => request.post('/suggest', data),
+	// 用户列表
+	getUsers: (pageNo) => request.get(`/noteUser/page?pageNo=${pageNo}&pageSize=20`),
+	// 提升vip
+	upVip: (id) => request.put(`/noteUser/upVip/${id}`),
+	// 降低vip
+	downVip: (id) => request.put(`/noteUser/downVip/${id}`),
+	// 笔记本列表(管理员)
+	getAdminNotePage: (pageNo) => request.get(`/notebook/page/admin?pageNo=${pageNo}&pageSize=20`),
 
 }
 

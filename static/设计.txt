@@ -1,58 +1,0 @@
-需要的接口：
-
-登录
-注册
-
-点滴：
-获取所有的记事本
-获取所有分享的记事本
-根据记事本获取里面的笔记
-获取笔记详细信息
-
-笔记删除
-笔记本删除
-
-笔记新增
-笔记修改
-
-笔记本重命名
-
-共享组：
-获取所有的共享组
-新增共享组
-
-获取当前共享组的成员
-获取当前共享组的笔记本
-
-添加成员
-添加笔记本
-移除全部成员
-移除全部笔记
-销毁共享组
-
-心情：
-根据时间获取心情和笔记
-
-我的：
-获取我的展示信息
-
-
-***************************
-表设计：
-用户表
-笔记表
-笔记本表
-共享组表
-共享组-笔记本表
-共享组-成员表
-
-*************************
-CREATE TABLE `note_user` (  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',  `uid` varchar(100) DEFAULT NULL COMMENT '点滴UID',  `userCode` varchar(100) DEFAULT NULL COMMENT '登录帐号',  `password` varchar(100) DEFAULT NULL COMMENT '密码',  `phone` varchar(100) DEFAULT NULL COMMENT '手机号',  `userName` varchar(100) DEFAULT NULL COMMENT '用户名',  `vip_grade` varchar(100) DEFAULT NULL COMMENT 'vip登记',  `type` tinyint(1) DEFAULT NULL COMMENT '类型',  `avatarUrl` varchar(200) DEFAULT NULL COMMENT '头像图片',  `gender` tinyint(1) DEFAULT NULL COMMENT '性别',  `openId` varchar(100) DEFAULT NULL COMMENT '授权id',
-  `create_time` datetime DEFAULT NULL COMMENT '创新时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
-CREATE TABLE `notebook` (  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',  `name` varchar(100) DEFAULT NULL COMMENT '名称',  `icon` varchar(100) DEFAULT NULL COMMENT '图标',  `create_time` datetime DEFAULT NULL COMMENT '创新时间',  `update_time` datetime DEFAULT NULL COMMENT '更新时间',  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='笔记本表';
-CREATE TABLE `notes` (  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',  `name` varchar(100) DEFAULT NULL COMMENT '名称',  `icon` varchar(100) DEFAULT NULL COMMENT '图标',  `cerate_time` datetime DEFAULT NULL COMMENT '创建时间',  `update_tiem` datetime DEFAULT NULL COMMENT '更新时间',  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='笔记表';
-CREATE TABLE `share` (  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',  `name` varchar(100) DEFAULT NULL COMMENT '名称',  `create_tiem` datetime DEFAULT NULL COMMENT '创建时间',  `update_time` datetime DEFAULT NULL COMMENT '更新时间',  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='共享组表';
-
-CREATE TABLE `share_member` (  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',  `share_id` bigint(20) DEFAULT NULL COMMENT '共享组id',  `member_id` bigint(20) DEFAULT NULL COMMENT '成员id',  `create_time` datetime DEFAULT NULL COMMENT '创建时间',  `update_time` datetime DEFAULT NULL COMMENT '更新时间',  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='共享组-成员表共享组-笔记本表';
-CREATE TABLE `share_notebook` (  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',  `share_id` bigint(20) DEFAULT NULL COMMENT '共享组id',  `notebook_id` bigint(20) DEFAULT NULL COMMENT '笔记本id',  `create_time` datetime DEFAULT NULL COMMENT '创建时间',  `update_time` datetime DEFAULT NULL COMMENT '更新时间',  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='共享组-笔记本表';

@@ -160,20 +160,6 @@
 		display: inline-block;
 	}
 
-	.catalog-line {
-		position: relative;
-		overflow: hidden;
-		width: 710upx;
-		padding: 20upx 20upx 20upx 20upx;
-		border-bottom: 3upx solid #f7f7f7;
-	}
-
-	.catalog-line-img {
-		height: 55upx;
-		width: 60upx;
-		margin-right: 30upx;
-	}
-
 	.add-wrap {
 		position: fixed;
 		bottom: 0;

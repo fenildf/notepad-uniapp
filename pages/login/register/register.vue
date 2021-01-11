@@ -4,21 +4,26 @@
 			<view class="input-item">
 				<view class="input-label">用户昵称</view>
 				<view class="input-body">
-					<input v-model="userName" maxlength="11" style="margin-right: 160upx;" placeholder="请输入用户昵称" class="input">
+					<input v-model="userName" maxlength="10" style="margin-right: 160upx;" placeholder="请输入用户昵称" class="input">
 				</view>
 			</view>
 			<view class="input-item">
 				<view class="input-label">手机号</view>
 				<view class="input-body">
 					<input v-model="phone" maxlength="11" type="number" style="margin-right: 160upx;" placeholder="请输入手机号" class="input">
-					<!-- <button :disabled="!isCanSendCode" class="btn-code" @click="sendCode">{{sendMsg}}</button> -->
 				</view>
 			</view>
 			<view class="input-item">
-				<view class="input-label">密码</view>
+				<view class="input-label">登录账号</view>
+				<view class="input-body">
+					<input v-model="userCode" maxlength="15" style="margin-right: 160upx;" placeholder="请输入5-15位登录账号" class="input">
+				</view>
+			</view>
+			<view class="input-item">
+				<view class="input-label">登录密码</view>
 				<view class="input-body">
 					<input v-model="password" type="text" :password="isHidePassword?true:false" style="margin-right: 50upx;"
-					 placeholder="请输入密码" maxlength="20" class="input" />
+					 placeholder="请输入6-20位密码" maxlength="20" class="input" />
 					<image @click="isHidePasswordClick" class="eye" :src="isHidePassword?'/static/login/attention.png':'/static/login/attention_forbid.png'"></image>
 				</view>
 			</view>
@@ -36,13 +41,12 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex';
+	import { mapGetters, mapActions } from 'vuex'
+	import { checkPhone, checkPwd, checkCode } from "@/common/common.js"
+	import { toast } from '@/common/common.js'
+	
 	let timer = '';
-	import {
-		checkPhone,
-		checkPwd,
-		checkCode
-	} from "@/common/common.js"
+	
 	export default {
 		data() {
 			return {
@@ -58,9 +62,11 @@
 		onLoad() {},
 		methods: {
 			...mapActions('user', ['register']),
+			// 隐藏密码
 			isHidePasswordClick() {
 				this.isHidePassword = !this.isHidePassword
 			},
+			// 发送验证
 			setCodeInterval() {
 				//设置验证码重新发送定时器
 				let time = 60;
@@ -85,40 +91,53 @@
 				if (!checkPhone(this.phone)) {
 					return
 				}
-				this.setCodeInterval();
-				/*
-				 * 发送验证码逻辑
-				 */
 			},
 			submit() {
 				if(!this.userName) {
-					uni.showToast({
-						icon:'none',
-						title:'请输入用户昵称'
-					})
+					toast('请输入用户昵称')
+					return;
+				}
+				if(!this.phone) {
+					toast('请输入手机号')
 					return;
 				}
 				if (!checkPhone(this.phone)) {
 					return;
-				};
-				if (!checkPwd(this.password)) {
-					return;
-				};
-				if (this.password != this.rePassword) {
-					uni.showToast({
-						icon:'none',
-						title:'两次密码不一致'
-					})
+				}
+				if(!this.userCode || this.userCode.length < 5 || this.userCode.length > 15) {
+					toast('请输入5-15位登录账号')
 					return;
 				}
-				this.register({phone: this.phone, password: this.password, userName: this.userName})
-				/*
-				 * 注册逻辑
-				 */
-				// this.$store.commit('update', ['isLogin', true]);
-				// uni.reLaunch({
-				// 	url: '/pages/index/index'
-				// })
+				if(!this.password || this.password.length < 6 || this.password.length > 20) {
+					toast('请输入6-20位密码')
+					return;
+				}
+				if (!checkPwd(this.password)) {
+					return;
+				}
+				if(!this.rePassword) {
+					toast('请输入确认密码')
+					return;
+				}
+				if (this.password != this.rePassword) {
+					toast('两次密码不一致')
+					return;
+				}
+				this.register({
+					userCode: this.userCode, 
+					phone: this.phone, 
+					password: this.password, 
+					userName: this.userName,
+				}).then(res => {
+					toast('注册成功')
+					let $this = this
+					//进入点滴页面
+					setTimeout(function() {
+						uni.navigateTo({
+							url: '/pages/login/login?loginType=password&userCode=' + $this.userCode + '&password=' + $this.password
+						});
+					}, 500);
+				})
 			}
 		}
 	}

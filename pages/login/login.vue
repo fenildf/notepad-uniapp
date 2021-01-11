@@ -17,8 +17,8 @@
 
 				<!-- #ifdef MP-WEIXIN -->
 				<view class="flex_column_none_c" :style="{'padding':windowHeight*.02+'px 0'}">
-					<image src="../../static/login/wx-login.jpeg" :style="{'height':windowHeight*.2+'px','width':windowHeight*.2+'px', 'margin':windowHeight*.02+'px 0'}"></image>
-					<button type="primary" open-type="getUserInfo" @getuserinfo="WX_MP_getuserinfo" class="wx-login-btn">微信授权登录</button>
+					<image src="../../static/login/wx-login.jpeg" :style="{'border-radius': '6px','height':windowHeight*.2+'px','width':windowHeight*.2+'px', 'margin':windowHeight*.02+'px 0'}"></image>
+					<button type="primary" open-type="getUserInfo" @getuserinfo="WX_MP_getuserinfo" class="wx-login-btn">微信授权</button>
 				</view>
 				<!-- #endif -->
 			</view>
@@ -28,7 +28,7 @@
 				</view>
 				<view class="flex_row_c_c fontColorADADAD width100 box-sizing-border-box" :style="{'margin-top':windowHeight*.02+'px', 'font-size': windowHeight*.021+'px', 'padding': windowHeight*.01+'px ' + windowWidth*.1+'px'}">
 					<view class="flex_row_e_c FlexPoint5">
-						手机号:
+						登录账号：
 					</view>
 					<view class="flex_row_none_c Flex1Point5 width100" :style="{'margin-left': windowWidth*.03+'px'}">
 						<view class="flex_row_none_c width100" :class="account_accountNum_focus?'input_view_item_active':'input_view_item'">
@@ -42,7 +42,7 @@
 				</view>
 				<view class="flex_row_c_c fontColorADADAD width100 box-sizing-border-box" :style="{'margin-top':windowHeight*.03+'px', 'font-size':windowHeight*.021+'px', 'padding':windowHeight*.01+'px ' + windowWidth*.1+'px'}">
 					<view class="flex_row_e_c FlexPoint5">
-						密码:
+						登录密码：
 					</view>
 					<view class="flex_row_none_c Flex1Point5 width100" :style="{'margin-left':windowWidth*.03+'px'}">
 						<view class="flex_row_none_c width100" :class="account_password_focus?'input_view_item_active':'input_view_item'">
@@ -64,13 +64,13 @@
 			</view>
 		</view>
 		<view class="flex_row_c_c box-sizing-border-box" :style="{'padding':windowHeight*.01+'px ' + windowWidth*.03+'px'}">
-			<view class="Flex1 flex_row_c_c" :style="{'margin':windowHeight*.02+'px '+windowWidth*.03+'px', 'font-size':windowHeight*.02+'px'}"
+			<view class="Flex1 flex_row_c_c" :style="{'margin':windowHeight*.02+'px '+windowWidth*.03+'px', 'font-size':windowHeight*.023+'px'}"
 			 :class="loginType==loginTypeObj.password.value?'fontColor33CC33 fontWeight':'fontColorADADAD'">
 				{{loginTypeObj.password.name}}
 			</view>
 			<switch :checked="loginType==loginTypeObj.thirdParty.value?true:false" @change="loginTypeChange" type="switch" color="#33CC33"
 			 class="FlexPoint5 flex_row_c_c" />
-			<view class="Flex1 flex_row_c_c" :style="{'margin':windowHeight*.02+'px '+windowWidth*.03+'px', 'font-size':windowHeight*.02+'px'}"
+			<view class="Flex1 flex_row_c_c" :style="{'margin':windowHeight*.02+'px '+windowWidth*.03+'px', 'font-size':windowHeight*.023+'px'}"
 			 :class="loginType==loginTypeObj.thirdParty.value?'fontColor33CC33 fontWeight':'fontColorADADAD'">
 				{{loginTypeObj.thirdParty.name}}(推荐)
 			</view>
@@ -81,6 +81,8 @@
 <script>
 	import uniIcons from '@/components/uni-icons/uni-icons.vue';
 	import { mapGetters, mapActions } from 'vuex';
+	import { toast } from '@/common/common.js'
+	
 	export default {
 		data() {
 			return {
@@ -147,56 +149,49 @@
 								//判断是否授权
 								uni.getSetting({
 									success(res) {
-										console.log("授权：", res);
 										if (!res.authSetting['scope.userInfo']) {
 											//这里调用授权
-											console.log("当前未授权");
+											toast("当前微信未授权，请开启微信授权");
 										} else {
-											//用户已经授权过了
-											console.log("当前已授权");
 											// 弹出正在登录的弹框
 											uni.showLoading({
 												mask: true,
-												title: '正在登录···',
-												complete: () => {}
+												title: '正在授权登录···',
+												complete: () => {
+													
+												}
 											});
-											// 判断已授权调取接口并获取openId
-											that.$apiReq.req({ // 创建对象
-												url: '/ui/wxutil/loginByWx', // 示例请求路径
-												method: "post",
-												data: {
-													'code': js_code,
-												},
-												success: (res) => {
-													//需要openId 可以在这里打印出来
-													if (res.data.code == 202) {
-														// 登录成功后判断是否是第一次注册  如果是弹出选择身份页面
-														uni.navigateTo({
-															url: './registeredIdentity/registeredIdentity',
-															success: res => {},
-															fail: () => {},
-															complete: () => {}
-														});
-													} else if (res.data.code == 201) {
-														//跳转
-														uni.switchTab({
-															url: '../homePage/homePage',
-															success: res => {},
-															fail: () => {},
-															complete: () => {}
-														});
-													}
-												},
+											// 调用登录
+											that.$api.wxLogin({
+												code: js_code,
+												userName: username,
+												avatarUrl: avatarUrl,
+												gender: gender
+											}).then(res => {
+												uni.showToast({
+													title: "微信授权成功",
+													icon: "none",
+													position: 'bottom'
+												})
+												//延时关闭  加载中的 loading框
+												uni.hideLoading();
+												//进入点滴页面
+												uni.switchTab({
+													url: '/pages/note/note'
+												});
 											})
-
 										}
 									}
 								})
 							},
-							fail: function(res) {}
+							fail: function(res) {
+								toast('获取用户信息失败，请开启微信用户信息获取')
+							}
 						})
 					},
-					fail: function(res) {}
+					fail: function(res) {
+						toast('微信授权失败，请开启微信授权登录')
+					}
 				})
 
 				//微信小程序微信登录方法
@@ -284,20 +279,24 @@
 				});
 			}
 		},
-		onLoad() {
-			let _this = this;
-			// #ifdef APP-PLUS
-			plus.oauth.getServices(function(services) {
-				for (let i in services) {
-					let service = services[i];
-					_this.auths[service.id] = service;
-				}
-				_this.readyLogin = true;
-			}, function(e) {
-				_app.showToast("获取登录认证失败：" + e.message);
-			});
-			// #endif
-
+		onLoad(options) {
+			if (options.loginType === 'password') {
+				this.loginType = options.loginType
+				this.account_accountNum = options.userCode
+				this.account_password = options.password
+			} else {
+				let _this = this;
+				// 获取登录认证
+				plus.oauth.getServices(function(services) {
+					for (let i in services) {
+						let service = services[i];
+						_this.auths[service.id] = service;
+					}
+					_this.readyLogin = true;
+				}, function(e) {
+					_app.showToast("获取登录认证失败：" + e.message);
+				});
+			}
 		},
 		components: {
 			uniIcons
@@ -327,7 +326,6 @@
 	}
 
 	.wx-login-btn {
-		width: 240upx;
 		margin-top: 60upx;
 		background-color: #33CC33;
 	}

@@ -110,6 +110,24 @@
 			}
 
 		},
+		{
+		    "path" : "pages/me/user/user",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "用户管理",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/me/notebook/notebook",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "笔记本管理",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
 		// 登录
 		{
 			"path": "pages/login/login",
@@ -126,7 +144,7 @@
 			}
 
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "我的",

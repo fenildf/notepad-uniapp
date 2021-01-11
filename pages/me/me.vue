@@ -3,7 +3,7 @@
 		<view>
 			<view class="user">
 				<view class="user_img">
-					<img src="../../static/me/head.png" />
+					<img :src="imgSrc"/>
 				</view>
 				<view class="user_info">
 					<text class="user_name">{{mineData.userName}}</text>
@@ -43,8 +43,20 @@
 					<text>关于我们</text>
 					<Icon type="fa-angle-right" size="50" class="icon-icon"></Icon>
 				</view>
-				<view class="customer_view" @click="toFollow()">
+				<view class="customer_view" @click="toFollow()" v-if="mineData.vipGrade > 1">
 					<text>开发者微信</text>
+					<Icon type="fa-angle-right" size="50" class="icon-icon"></Icon>
+				</view>
+				<view class="customer_view" @click="toUsers()" v-if="mineData.vipGrade === 99">
+					<text>用户管理</text>
+					<Icon type="fa-angle-right" size="50" class="icon-icon"></Icon>
+				</view>
+				<view class="customer_view" @click="toNotebooks()" v-if="mineData.vipGrade === 99">
+					<text>笔记本管理</text>
+					<Icon type="fa-angle-right" size="50" class="icon-icon"></Icon>
+				</view>
+				<view class="customer_view" @click="toLogout()">
+					<text>退出当前账号</text>
 					<Icon type="fa-angle-right" size="50" class="icon-icon"></Icon>
 				</view>
 			</view>
@@ -54,27 +66,32 @@
 
 <script>
 	import Icon from '@/components/atom-awesome-icon/Icon.vue'
+	import { toast } from '@/common/common.js'
+	import { mapActions } from 'vuex'
 	
 	export default {
 		name: 'me',
 		data() {
 			return {
+				imgSrc: '../../static/me/head.png',
 				mineData: {}
 			}
 		},
 		components: {
 			Icon
 		},
-		onLoad() {
-			
-		},
+		onLoad() {},
 		mounted() {
 			this.getMineData()
 		},
 		methods: {
+			...mapActions('user', ['logout']),
 			getMineData() {
 				this.$api.getMineData().then(res => {
 					this.mineData = res;
+					if (this.mineData.avatarUrl) {
+						this.imgSrc = this.mineData.avatarUrl
+					}
 				})
 			},
 			toSuggest() {
@@ -83,17 +100,42 @@
 				});
 			},
 			toAbout() {
-				// uni.navigateTo({
-				// 	url: '/pages/me/about/about'
-				// });
 				uni.navigateTo({
-					url: '/pages/login/login'
+					url: '/pages/me/about/about'
 				});
+				// uni.navigateTo({
+				// 	url: '/pages/login/login'
+				// });
 			},
 			toFollow() {
 				uni.navigateTo({
 					url: '/pages/me/follow/follow'
 				});
+			},
+			toUsers() {
+				uni.navigateTo({
+					url: '/pages/me/user/user'
+				});
+			},
+			toNotebooks() {
+				uni.navigateTo({
+					url: '/pages/me/notebook/notebook'
+				});
+			},
+			toLogout() {
+				this.logout().then(res => {
+					uni.removeStorage({
+						key: 'notepad-token',
+						success() {
+							toast('当前账号已退出')
+							setTimeout(function() {
+								uni.reLaunch({
+									url: '/pages/login/login'
+								})
+							}, 1000);
+						}
+					})
+				})
 			},
 			// 下拉刷新
 			onPullDownRefresh() {

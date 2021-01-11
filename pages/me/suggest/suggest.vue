@@ -5,33 +5,54 @@
 		</view>
 		<view>
 			<view class="user_name">
-				<input class="uni-input" placeholder="请输入您的姓名" />
+				<input class="uni-input" v-model="suggest.name" placeholder="请输入您的姓名" maxlength="20" />
 			</view>
 			<view class="user_phone">
-				<input class="uni-input" placeholder="请输入您的手机号" />
+				<input class="uni-input" v-model="suggest.mobile" placeholder="请输入您的手机号" maxlength="11" />
 			</view>
 			<view class="user_weixin">
-				<input class="uni-input" placeholder="请输入您的微信号" />
+				<input class="uni-input" v-model="suggest.wxNum" placeholder="请输入您的微信号" maxlength="20" />
 			</view>
 		</view>
 		<view class="user_content">
-			<textarea placeholder="请描述您的详细问题，我们会尽快改正。"></textarea>
+			<textarea placeholder="请描述您的详细问题，我们会尽快改正。" v-model="suggest.content"></textarea>
 		</view>
 		<view class="user_button">
-			<button>提交反馈</button>
+			<button @click="submit">提交反馈</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { toast } from '@/common/common.js'
+	import { checkPhone } from "@/common/common.js"
+	
 	export default {
 		data() {
 			return {
-
+				suggest: {}
 			}
 		},
 		methods: {
-
+			submit() {
+				if(!this.suggest.content) {
+					toast('请描述您的详细问题')
+					return;
+				}
+				if (this.suggest.mobile) {
+					if (!checkPhone(this.suggest.mobile)) {
+						return
+					}
+				}
+				this.$api.addSuggest(this.suggest).then(res => {
+					toast('反馈成功，感谢您的建议')
+					setTimeout(function() {
+						uni.reLaunch({
+								url: '/pages/me/me'
+							})
+					}, 1000);
+				})
+			}
 		}
 	}
 </script>

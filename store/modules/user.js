@@ -26,8 +26,8 @@ const actions = {
     commit('setUserInfo', data)
   },
   async logout({ commit, state }) {
-    const data = await API.logout()
-    commit('', null)
+    // const data = await API.logout()
+    commit('setUserInfo', null)
   }
 }
 
