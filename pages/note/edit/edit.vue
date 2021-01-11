@@ -109,7 +109,7 @@
 				var beforePage = pages[pages.length - 2]; // 前一个页面
 				wx.navigateBack({
 					success: function() {
-						beforePage.onLoad({noteId: $this.note.id, noteName: $this.note.name, notebookId: $this.options.notebookId});
+						beforePage.onLoad({noteId: $this.note.id, noteName: $this.note.name, notebookId: $this.options.notebookId, edit: 'edit'});
 					}
 				});
 			}

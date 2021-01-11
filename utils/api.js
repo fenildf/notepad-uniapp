@@ -1,7 +1,7 @@
 import request from './request'
 
 // const baseURL = `https://petrify.cc`
-const baseURL = 'http://192.168.8.118:7080'
+const baseURL = 'http://192.168.80.241:7080'
 
 request.config.baseURL = baseURL
 
@@ -57,6 +57,9 @@ const api = {
 	getMoodData: () => request.get('/mood'),
 	// 保存心情
 	saveMood: (data) => request.post('/mood', data),
+	
+	// 我的信息
+	getMineData: () => request.get('/mine'),
 
 }
 

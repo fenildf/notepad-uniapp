@@ -6,10 +6,10 @@
 					<img src="../../static/me/head.png" />
 				</view>
 				<view class="user_info">
-					<text class="user_name">狮子座流星雨</text>
+					<text class="user_name">{{mineData.userName}}</text>
 					<view class="user_desc">
-						<text class="vip">砖石会员</text>
-						<text class="user_uid">点滴UID：ZH368409</text>
+						<text class="vip">{{mineData.vipName}}</text>
+						<text class="user_uid">点滴UID：{{mineData.uid}}</text>
 					</view>
 				</view>
 			</view>
@@ -17,19 +17,19 @@
 				<view class="clear">
 					<view>
 						<Icon type="fa-birthday-cake" size="50" class="icon-icon"></Icon>
-						<text class="num-text">120天</text>
+						<text class="num-text">{{mineData.registerDays}}天</text>
 					</view>
 					<view>
 						<Icon type="fa-book" size="50" class="icon-icon"></Icon>
-						<text class="num-text">5本</text>
-					</view>
-					<view>
-						<Icon type="fa-heart" size="50" class="icon-icon"></Icon>
-						<text class="num-text">20篇</text>
+						<text class="num-text">{{mineData.notebookNum}}本</text>
 					</view>
 					<view>
 						<Icon type="fa-modx" size="50" class="icon-icon"></Icon>
-						<text class="num-text">7次</text>
+						<text class="num-text">{{mineData.noteNum}}篇</text>
+					</view>
+					<view>
+						<Icon type="fa-heart" size="50" class="icon-icon"></Icon>
+						<text class="num-text">{{mineData.moodTimes}}次</text>
 					</view>
 				</view>
 				<view class="clear"></view>
@@ -54,15 +54,29 @@
 
 <script>
 	import Icon from '@/components/atom-awesome-icon/Icon.vue'
+	
 	export default {
 		name: 'me',
 		data() {
-			return {}
+			return {
+				mineData: {}
+			}
 		},
 		components: {
 			Icon
 		},
+		onLoad() {
+			
+		},
+		mounted() {
+			this.getMineData()
+		},
 		methods: {
+			getMineData() {
+				this.$api.getMineData().then(res => {
+					this.mineData = res;
+				})
+			},
 			toSuggest() {
 				uni.navigateTo({
 					url: '/pages/me/suggest/suggest'
@@ -80,6 +94,13 @@
 				uni.navigateTo({
 					url: '/pages/me/follow/follow'
 				});
+			},
+			// 下拉刷新
+			onPullDownRefresh() {
+				this.getMineData();
+				setTimeout(function() {
+					uni.stopPullDownRefresh();
+				}, 1000);
 			}
 		}
 	}
@@ -211,11 +232,11 @@
 	}
 
 	.my_service>view>view:nth-child(3) {
-		color: #e60000;
+		color: #f5bb1a;
 	}
 
 	.my_service>view>view:nth-child(4) {
-		color: #417cf9;
+		color: #e60000;
 	}
 
 	.num-text {

@@ -1,7 +1,7 @@
 <template>
 	<view id="pinion">
 		<view>
-			<text>个人信息如有不便，您可以你选择不填</text>
+			<text>个人信息如有不便，您可以选择不填</text>
 		</view>
 		<view>
 			<view class="user_name">

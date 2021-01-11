@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="text-view">
-			<text>如果喜欢，或者有什么建议(Bug)，可以添加开发者微信</text>
+			<text>如果喜欢，或者有什么建议(Bug)，欢迎向我反馈</text>
 		</view>
 		<image class="image" src="../../../static/me/me_wx.jpg"></image>
 		<view class="icon-view">
