@@ -12,9 +12,9 @@
 		</view>
 
 		<s-popup position="center" v-model="visible">
-			<view class="catalog-popup">
+			<view class="catalog-popup" v-if="visible">
 				<label class="catalog-label">添加记事本</label>
-				<input class="uni-input" focus v-model="notebook.name" placeholder="请输入记事本名称" maxlength="8"></input>
+				<input class="uni-input" focus v-model="notebook.name" @input="inputChange" placeholder="请输入记事本名称" maxlength="8"></input>
 				<button @click="addNotebook">确认</button>
 			</view>
 		</s-popup>
@@ -33,7 +33,9 @@
 		data() {
 			return {
 				visible: false,
-				notebook: {},
+				notebook: {
+					name: '1'
+				},
 				list: [],
 				page: {
 					records: [],
@@ -88,7 +90,11 @@
 			},
 			// 新增笔记本弹框
 			showCatalogDialog() {
+				this.notebook.name = {}
 				this.viewNamePopup()
+			},
+			inputChange(e){
+				this.notebook.name = e.detail.value;
 			},
 			// 新增笔记本提交
 			addNotebook() {

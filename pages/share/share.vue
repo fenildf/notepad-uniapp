@@ -21,7 +21,7 @@
 			</view>
 
 			<s-popup position="center" v-model="visible">
-				<view class="popup-view">
+				<view class="popup-view" v-if="visible">
 					<label class="popup-label">添加共享组</label>
 					<input class="uni-input" focus v-model="share.name" placeholder="请输入共享组名称" maxlength="8"></input>
 					<button @click="addShare">确认</button>

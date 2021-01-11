@@ -20,7 +20,7 @@
 			</button>
 
 			<s-popup position="center" v-model="visible">
-				<view class="setting-popup">
+				<view class="setting-popup" v-if="visible">
 					<label class="setting-label">添加成员</label>
 					<input class="uni-input" focus v-model="uid" placeholder="请输入想要共享笔记的用户点滴UID" maxlength="16"></input>
 					<button @click="addMember">确认</button>
@@ -63,12 +63,16 @@
 			},
 			// 绑定笔记本
 			bindPickerChange(e) {
-				let notebook = this.notebooks[e.target.value];
-				this.$api.bindShareNotebook(this.shareId, notebook.id).then(res => {
-					toast("添加笔记本成功");
-					this.getAllNotebook();
-					this.flush();
-				})
+				if(e.target && e.target.value) {
+					let notebook = this.notebooks[e.target.value];
+					if (notebook) {
+						this.$api.bindShareNotebook(this.shareId, notebook.id).then(res => {
+							toast("添加笔记本成功");
+							this.getAllNotebook();
+							this.flush();
+						})
+					}
+				}
 			},
 			addMemberView() {
 				this.visible = true;

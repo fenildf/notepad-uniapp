@@ -4,13 +4,13 @@
 		 :loadingTip="scroll.loadingTip" :emptyTip="scroll.emptyTip" :touchHeight="scroll.touchHeight" :height="scroll.height"
 		 :bottom="scroll.bottom" :autoPullUp="scroll.autoPullUp" :stopPullDown="scroll.stopPullDown" @onPullDown="handlePullDown"
 		 @onPullUp="handleLoadMore">
-			<simple-slide-list :list="list" :border="true" @click="clickMethod"></simple-slide-list>
+			<mark-slide-list :list="list" :border="true" @click="clickMethod"></mark-slide-list>
 		</k-scroll-view>
 	</view>
 </template>
 
 <script>
-	import simpleSlideList from "@/components/simple-slide-list/simple-slide-list.vue"
+	import markSlideList from "@/components/mark-slide-list/mark-slide-list.vue"
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 
 	export default {
@@ -37,7 +37,7 @@
 			}
 		},
 		components: {
-			simpleSlideList,
+			markSlideList,
 			kScrollView
 		},
 		mounted() {
@@ -47,6 +47,11 @@
 			// 加载数据
 			getAdminNotePage(pageNo) {
 				this.$api.getAdminNotePage(pageNo).then(res => {
+					res.records.forEach(item => {
+						item.title = item.name;
+						item.rightDetail = dateFormat("YYYY-mm-dd", new Date(item.createTime));
+						item.detail = item.userName + "的共享";
+					});
 					this.page = res
 					this.list = pageNo === 1 ? this.page.records : this.list.concat(this.page.records);
 				});

@@ -29,7 +29,7 @@
 		</view>
 
 		<s-popup position="center" v-model="visible">
-			<view class="catalog-popup">
+			<view class="catalog-popup" v-if="visible">
 				<label class="catalog-label">添加心情</label>
 				<editor id="editor" class="edit-text" placeholder="请输入今日份心情..." @ready="onEditorReady" @input="inputChange"></editor>
 				<!-- <input class="uni-input" focus v-model="mood.moodContent" placeholder="请输入今日份心情" maxlength="100"></input> -->

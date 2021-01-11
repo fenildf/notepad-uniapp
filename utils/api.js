@@ -1,7 +1,8 @@
 import request from './request'
 
 // const baseURL = `https://petrify.cc`
-const baseURL = 'http://192.168.8.118:7080'
+// const baseURL = 'http://192.168.8.118:7080'
+const baseURL = 'http://192.168.164.1:7080'
 
 request.config.baseURL = baseURL
 
