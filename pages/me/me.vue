@@ -74,7 +74,9 @@
 		data() {
 			return {
 				imgSrc: '../../static/me/head.png',
-				mineData: {}
+				mineData: {
+					
+				}
 			}
 		},
 		components: {

@@ -1,6 +1,6 @@
 import request from './request'
 
-const baseURL = `http://imyanger.com/api/notepad`
+const baseURL = `https://imyanger.com/api/notepad`
 // const baseURL = 'http://192.168.8.118:10086'
 // const baseURL = 'http://192.168.164.1:10086'
 
