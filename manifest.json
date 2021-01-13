@@ -1,6 +1,6 @@
 {
     "name" : "点滴记事本",
-    "appid" : "",
+    "appid" : "__UNI__4D76160",
     "description" : "世事纷杂，点滴做起",
     "transformPx" : false,
     "icons" : [
@@ -40,16 +40,19 @@
                     }
                 },
                 "android" : {
-                    "hdpi" : "unpackage/res/icons/72x72.png",
+                    "hdpi" : "static/icons/hdpi.png",
                     "ldpi" : "unpackage/res/icons/48x48.png",
                     "mdpi" : "unpackage/res/icons/48x48.png",
-                    "xhdpi" : "unpackage/res/icons/96x96.png",
-                    "xxhdpi" : "unpackage/res/icons/144x144.png",
-                    "xxxhdpi" : "unpackage/res/icons/192x192.png"
+                    "xhdpi" : "static/icons/xhdpi.png",
+                    "xxhdpi" : "static/icons/xxhdpi.png",
+                    "xxxhdpi" : "static/icons/xxxhdpi.png"
                 }
             },
             "android" : {
                 "permissions" : []
+            },
+            "sdkConfigs" : {
+                "ad" : {}
             }
         },
         "modules" : {}
