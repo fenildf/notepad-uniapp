@@ -3,7 +3,7 @@
 		<view>
 			<view class="user">
 				<view class="user_img">
-					<img :src="imgSrc"/>
+					<image :src="imgSrc"/>
 				</view>
 				<view class="user_info">
 					<text class="user_name">{{mineData.userName}}</text>
@@ -190,7 +190,7 @@
 		align-items: center;
 	}
 
-	.user_img img {
+	.user_img image {
 		height: 120upx;
 		width: 120upx;
 		align-items: center;

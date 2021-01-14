@@ -11,6 +11,8 @@ const api = {
 	login: (data) => request.post('/login', data),
 	// 微信授权登录
 	wxLogin: (data) => request.post('/wxLogin', data),
+	// 微信app登录
+	wxAppLogin: (data) => request.post('/wxAppLogin', data),
 	// 注册
 	register: (data) => request.post('/register', data),
 
@@ -55,12 +57,12 @@ const api = {
 	bindShareNotebook: (shareId, notebookId) => request.put(`/share/${shareId}/notebook/${notebookId}`),
 	// 获取我的所有笔记本
 	getNoteBookList: (shareId) => request.get(`/notebook/list?shareId=${shareId}`),
-	
+
 	// 获取心情数据
 	getMoodData: () => request.get('/mood'),
 	// 保存心情
 	saveMood: (data) => request.post('/mood', data),
-	
+
 	// 我的信息
 	getMineData: () => request.get('/mine'),
 	// 提交建议

@@ -5,14 +5,15 @@
 				<view class="view_Title_Middel" :style="{'font-size':windowHeight*.024+'px', 'padding':windowHeight*.015+'px 0'}">
 					{{loginTypeObj.thirdParty.name}}
 				</view>
+				
 				<!-- #ifdef APP-PLUS -->
 				<view class="width100 flex_row_c_c" :style="{'height':windowHeight*.2+'px'}">
 					<view class="flex_column_c_c" :style="{'padding':windowHeight*.01+'px 0', 'width': windowWidth*.25+'px', 'font-size':windowHeight*.022+'px'}"
 					 @tap="wxlogin('weixin');">
 						<image src="../../static/login/wx-login.jpeg" mode="widthFix" :style="{'width':windowWidth*.2+'px', 'margin-bottom':windowHeight*.02+'px'}"></image>
-						微信登陆
 					</view>
 				</view>
+				<button type="primary" @click="wxlogin('weixin')" class="wx-login-btn">微信登陆</button>
 				<!-- #endif -->
 
 				<!-- #ifdef MP-WEIXIN -->
@@ -117,6 +118,7 @@
 		},
 		methods: {
 			...mapActions('user', ['login']),
+			
 			// #ifdef APP-PLUS
 			wxlogin(type) {
 				let _this = this;
@@ -126,10 +128,60 @@
 					});
 					return;
 				}
+				let that = this;
+				 toast("111");
 				//app微信登录方法
-
+				uni.getProvider({
+					service: 'oauth',
+					success: function(res) {
+						//支持微信、qq和微博等
+						if (~res.provider.indexOf('weixin')) {
+							uni.login({
+								provider: 'weixin',
+								success: function(loginRes) {
+									// 获取用户信息
+									uni.getUserInfo({
+										provider: 'weixin',
+										success: function(infoRes) {
+											// toast(JSON.stringify(infoRes.userInfo));
+											// 弹出正在登录的弹框
+											uni.showLoading({
+												mask: true,
+												title: '正在微信登录···',
+												complete: () => {
+													
+												}
+											});
+											// 调用登录
+											let userInfo = infoRes.userInfo;
+											that.$api.wxAppLogin({
+												openId: userInfo.openId,
+												userName: userInfo.nickName,
+												avatarUrl: userInfo.avatarUrl,
+												gender: userInfo.gender
+											}).then(res => {
+												uni.showToast({
+													title: "微信登录成功",
+													icon: "none",
+													position: 'bottom'
+												})
+												//延时关闭  加载中的 loading框
+												uni.hideLoading();
+												//进入点滴页面
+												uni.switchTab({
+													url: '/pages/note/note'
+												});
+											})
+										}
+									});
+								}
+							});
+						}
+					}
+				});
 			},
 			// #endif
+			
 			// #ifdef MP-WEIXIN
 			WX_MP_getuserinfo(e) {
 				var that = this
@@ -191,30 +243,6 @@
 					},
 					fail: function(res) {
 						toast('微信授权失败，请开启微信授权登录')
-					}
-				})
-
-				//微信小程序微信登录方法
-				uni.login({
-					provider: 'weixin',
-					success: function(loginRes) {
-						console.log(loginRes);
-					}
-				});
-
-				uni.getUserInfo({
-					success: (res) => {
-						this.userInfo = res.userInfo;
-						console.log(this.userInfo);
-						uni.showToast({
-							title: this.userInfo
-						});
-					},
-					fail: () => {
-						uni.showToast({
-							title: '授权失败'
-						});
-						console.log("未授权");
 					}
 				})
 			},
