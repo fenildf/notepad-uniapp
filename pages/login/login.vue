@@ -129,7 +129,6 @@
 					return;
 				}
 				let that = this;
-				 toast("111");
 				//app微信登录方法
 				uni.getProvider({
 					service: 'oauth',
